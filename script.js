@@ -435,7 +435,7 @@ function reset() {
   cube1.innerHTML = cube_values[7];
   cube2.innerHTML = cube_values[7];
   cube3.innerHTML = cube_values[7];
-  /* aktivácia tlačidla s pravidlami */
+  /* aktivácia tlačidla s pravidlami, aby bolo k dispozícii */
   rules_button.addEventListener("click", rules_show);
   /* a kontroluj aj resize pri otáčaní mobilov či tabletov */
   window.addEventListener("resize", resize_cubes);
