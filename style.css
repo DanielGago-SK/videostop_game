@@ -1,0 +1,189 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+:root {
+  /*--bgr_color:#292979;*/
+  --bgr_color: rgb(53, 53, 71);
+  --txt_color: burlywood;
+  --txt_color2: black;
+  /*--bgr_color: rgb(177, 177, 177);
+  --txt_color:rgb(32, 32, 32);
+  --txt_color2: black;*/
+}
+
+body {
+  background: var(--bgr_color);
+  min-height: 100vh;
+  position: relative;
+}
+
+.width {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  font-family: Helvetica, sans-serif;
+}
+
+#logo {
+  position: absolute;
+  padding: 1rem;
+}
+
+#logo img {
+  height: 1.3rem;
+}
+
+#rules_button {
+  position: absolute;
+  right: 0;
+  color: var(--txt_color);
+  text-align: right;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.width h1 {
+  font-size: 3rem;
+  /*text-shadow:
+       -2px 2px 0 var(--txt_color),
+     -1px -1px 0 var(--txt_color),    
+      1px -1px 0 var(--txt_color),
+      -1px 1px 0 var(--txt_color),
+       1px 1px 0 var(--txt_color);*/
+  text-align: center;
+  font-weight: 500;
+  color: var(--txt_color);
+  font-family: Times, serif;
+  letter-spacing: 3px;
+  padding-top: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.top_cubes {
+  position: relative;
+  margin: 2rem auto 2rem auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+}
+
+svg {
+  display: inline-block;
+}
+
+.buttons {
+  position: relative;
+  margin: 1rem auto 2rem auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+}
+
+#rst,
+#start {
+  font-size: 1.35rem;
+  padding: 5px 10px;
+  border: 1px solid var(--txt_color2);
+  border-radius: 5px;
+  /* dvojitý outline okraj, spolu s border teda trojitý okraj... */
+  -webkit-box-shadow: 0 0 0 2pt gray, 0 0 0 3pt black;
+          box-shadow: 0 0 0 2pt gray, 0 0 0 3pt black;
+}
+
+#rst {
+  background-color: rgb(255, 68, 68);
+}
+
+#start {
+  background-color: green;
+}
+
+p {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.info_block {
+  font-size: 1.25rem;
+  color: var(--txt_color);
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.info_block p {
+  padding-bottom: 0.5rem;
+}
+
+.info_block .small {
+  font-size: 1rem;
+}
+
+#final_info {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(34, 34, 34, 0.85);
+  color: white;
+  font-size: 2rem;
+  display: none;
+  /* normálne nezobrazené, až na konci hry ho treba */
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+#rules_info {
+  width: 100vw;
+  height: 0px;
+  transition: height 1s;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(34, 34, 34, 0.95);
+  color: white;
+  font-size: 2rem;
+  display: flex;
+  /* normálne nezobrazené, až na konci hry ho treba */
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+}
+
+#rules_info p {
+  font-size: 1rem;
+  padding: 1rem;
+  letter-spacing: 1px;
+  max-width: 700px;
+  line-height: 1.5;
+}

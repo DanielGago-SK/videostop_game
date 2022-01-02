@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="sk">
+<!-- © Daniel Gago Ver:1 - last update 1.1.2022 -->
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="author" content="Daniel Gago">
+	<meta name="description" content="Mini hra inšpirovaná hrou použitou v relácii Videostop z 90 tich rokov.">
+	<title>3 kocky - zahraj sa mini hru v JS</title>
+	<link rel="stylesheet" href="style.css">
+	
+	<!-- ikony -->
+	<link rel="apple-touch-icon" sizes="57x57" href="./ico/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="./ico/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="./ico/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="./ico/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="./ico/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="./ico/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="./ico/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="./ico/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="./ico/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="./ico/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="./ico/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="./ico/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="./ico/favicon-16x16.png">
+	<link rel="manifest" href="./ico/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="./ico/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+
+</head>
+
+<body>
+
+	<div class="width">
+		<div id="logo">
+			<img src="./android-icon-36x36.png" alt="logo">
+		</div>
+		<p id = "rules_button">(info)</p>
+		<h1>3 kocky</h1>
+		<div class="top_cubes">
+			<div id="cube1">
+			
+			</div>
+			<div id="cube2">
+			
+			</div>
+			<div id="cube3">
+				
+			</div>
+
+		</div>
+		<div class="buttons">
+			<button id="rst">Reset</button>
+			<button id="start">Štart</button>
+		</div>
+		<div class="info_block">
+			<p>Skóre: <span id="score">0</span></p>
+			<p class="small">Posledný klik: <span id="last_click"></span></p>
+			<p class="small">Rekord: <span id="record">0</span></p>
+			<p>Prémia: <span id="premium">-</span></p>
+			<p>Čas do konca (sekundy): <span id="counter"></span></p>
+		</div>
+
+	</div>
+
+	<div id="final_info"></div>
+	<div id="rules_info">
+<p><b>Pravidlá:</b><br> 
+	Cieľom hry je získavať body za klikanie v "správny čas". Treba sledovať hodnoty kociek.
+				Za dve rovnaké hodnoty sú 2 body, za tri rovnaké hodnoty 6 bodov (a prémia, ktorá sa ale zruší, ak hra skončí
+				kvôli skóre pod nulou!). Ak nie je zhoda, tak -3 body... <br>
+				Klikaj preto s rozvahou... 🙂<br>
+				Hra končí keď sa dostaneš v skóre pod "0", alebo po 2 minútach. Tlačidlo Reset ruší iba aktuálnu hru, hodnota "Rekord" zostáva. Ale "Prémia" zostáva iba z daktorej plne dohranej hry, nie z aktuálnej - prerušenej!<br>
+				<br>
+				(klikni pre zrušenie nápovedy)<br>
+			&copy;12/2021 Daniel Gago</p>
+</div>
+
+	<script src="script.js"></script>
+	
+</body>
+
+</html>
