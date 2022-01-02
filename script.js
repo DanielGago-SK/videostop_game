@@ -74,10 +74,10 @@ color_circle_bgr = "#2f4858";
 color_circle_stroke = "#000";
 circle_stroke_width = 1;
 
-define_array()
+define_cube_array()
 // ! definíciu poľa musím mať ako funkciu, inak neprekreslím veľkosti kociek ak ich potrebujem meniť počas behu aplikácie... treba to znovu zavolať... 
 
-function define_array() {
+function define_cube_array() {
 cube_values = [
   /* 0 */
   `
@@ -471,6 +471,6 @@ function resize_cubes () {
     box = 100;
     circle_r = 10;
   }
-define_array();
+define_cube_array();
 reset();
 }
