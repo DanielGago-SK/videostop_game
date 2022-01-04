@@ -14,9 +14,9 @@ rules_button = document.getElementById("rules_button");
 rules_info = document.getElementById("rules_info");
 current = 0; // aktuálny klik
 score = 0; // skóre
-timer = 120; // dĺžka hry v sekundách 
-counter = timer; // časomiera - odpočítavanie 
-change_interval = 1000; // interval pre zmenu hodnoty kociek 
+timer = 120; // dĺžka hry v sekundách
+counter = timer; // časomiera - odpočítavanie
+change_interval = 1000; // interval pre zmenu hodnoty kociek
 game_running = false; // stav hry - nebeží...
 
 // ? je v pamäti uložený dajaký rekord
@@ -58,7 +58,6 @@ if (control_width > 499) {
   box = 100;
   circle_r = 10;
 }
-
 
 // pole s grafikou kociek
 // je tu aj nula - bez guličiek, keby sa to hodilo, a aj 7 - to je plná kocka
@@ -126,7 +125,7 @@ function define_cube_array() {
       box - box / 4 + 10
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
 		</svg>`,
-    // 4 
+    // 4
     `
 		<svg width="${box + 10}" height="${box + 10}">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
@@ -231,67 +230,67 @@ const canVibrate = window.navigator.vibrate;
 // hneď na úvod reset hry
 reset();
 
-// TODO prerob toto tlačidlo na dva samostatné listenner-y ktoré môžem zapínať a vypínať...
-
-/* tlačidlo štart kontroluje štart hry, ale aj klikanie počas hry*/
-/* išlo by to riešiť aj pomocou pridávania a odoberania dvoch rôznych listenner-ov - každý by bol aktívny inokedy ale v praxi to vyslovene netreba */
-/* ak by boli dva listenery tak by sa kódy v podmienke prerobili na samostatné funkcie ktoré by sa volali nezávisle od seba */
-button_start.addEventListener("click", () => {
-  if (canVibrate) window.navigator.vibrate(30);
-  /*ak hra nebežala, tak ju spusti... */
-  if (!game_running) {
-    /* reset pre istotu... */
-    reset();
-    /* stav hry zmeň na beží */
-    game_running = true;
-    /* tlačidlo "Štart" prekóduj */
-    button_start.style.backgroundColor = "yellowgreen";
-    button_start.innerText = "Klik";
-    /* nahoď hneď už dajaké hodnoty kociek */
-    change_cubes();
-    /* a spusti intervaly na nahadzovanie kociek a kontrolu času hry */
-    interval_cubes = setInterval(change_cubes, change_interval);
-    interval_stopwatch = setInterval(stopwatch, 1000);
-    /* počas hry zruš možnosť klikania na info tlačidlo, pre istotu... */
-    rules_button.removeEventListener("click", rules_show);
-    /* aj možnosť resize kociek! */
-    window.removeEventListener("resize", resize_cubes);
-    /* hra sa rozbehla, tak návrat */
-    return;
-  }
+// funkcia na rozbeh hry
+ function start_the_game() {
+   // vibrácie na tlačítku
+   if (canVibrate) window.navigator.vibrate(30);
+   // zmeň stav hry na "beží"
+   game_running = true;
+   /* tlačidlo "Štart" prekóduj */
+   button_start.style.backgroundColor = "yellowgreen";
+   button_start.innerText = "Klik";
+   /* nahoď hneď už dajaké hodnoty kociek */
+   change_cubes();
+   /* a spusti intervaly na nahadzovanie kociek a kontrolu času hry */
+   interval_cubes = setInterval(change_cubes, change_interval);
+   interval_stopwatch = setInterval(stopwatch, 1000);
+   /* počas hry zruš možnosť klikania na info tlačidlo, pre istotu... */
+   rules_button.removeEventListener("click", rules_show);
+   /* aj možnosť resize kociek! */
+   window.removeEventListener("resize", resize_cubes);
+   // hra sa rozbehla, štart už zablokuj, odblokuje sa Klik...
+   button_start.removeEventListener("click", start_the_game);
+   button_start.addEventListener("click", click_control);
+   // aktivuj kontrolu tlačidla Reset, má fungovať iba ak beží hra...
+   button_rst.addEventListener("click", reset_the_game);
+ }
 
   // * kód pre stav keď hra beží, kontrola stavu kociek pri stlačení... a zápis hodnôt skóre
-
-  // ak sú všetky tri rovnaké - prémia + lepšie skóre...
-  // ! táto kontrola musí byť prvá !!
-  if (cube_number1 == cube_number2 && cube_number1 == cube_number3) {
-    premium_true();
-    score += 6;
-    score_info.innerText = score;
-    last_click.innerText = "+ 6 bodov 👍";
-  } else if ( // ak sú aspoň dve rovnaké, pridaj body
-    cube_number1 == cube_number2 ||
-    cube_number1 == cube_number3 ||
-    cube_number2 == cube_number3
-  ) {
-    score += 2;
-    score_info.innerText = score;
-    last_click.innerText = " + 2 body";
-  } else { // žiadna zhoda, body dolu
-    score -= 3;
-    score_info.innerText = score;
-    last_click.innerText = "-3 body 👎";
-    if (score < 0) { // ak skóre padlo pod nulu, koniec... 
-      // ! a prémia je v čudu taktiež
-      premium_false();
-      // stopni tú tragédiu...
-      stop();
+  function click_control() {
+    // ak sú všetky tri rovnaké - prémia + lepšie skóre...
+    // ! táto kontrola musí byť prvá !!
+    if (cube_number1 == cube_number2 && cube_number1 == cube_number3) {
+      premium_true();
+      score += 6;
+      score_info.innerText = score;
+      last_click.innerText = "+ 6 bodov 👍";
+    } else if (
+      // ak sú aspoň dve rovnaké, pridaj body
+      cube_number1 == cube_number2 ||
+      cube_number1 == cube_number3 ||
+      cube_number2 == cube_number3
+    ) {
+      score += 2;
+      score_info.innerText = score;
+      last_click.innerText = " + 2 body";
+    } else {
+      // žiadna zhoda, body dolu
+      score -= 3;
+      score_info.innerText = score;
+      last_click.innerText = "-3 body 👎";
+      if (score < 0) {
+        // ak skóre padlo pod nulu, koniec...
+        // ! a prémia je v čudu taktiež
+        premium_false();
+        // stopni tú tragédiu...
+        stop();
+      }
     }
   }
-});
 
-// dosiahla sa prémia - zatiaľ iba kontrola v tejto hre!
-  // zobrazí sa a uloží stav - len pre túto hru
+
+// dosiahla sa prémia - zatiaľ iba v tejto hre!
+// zobrazí sa a uloží stav - len pre túto hru, nie teda aj do Storage!
 function premium_true() {
   premium_this_game = true;
   premium_info.innerText = "♥";
@@ -299,39 +298,36 @@ function premium_true() {
 }
 
 // prišli sme o prémiu
-  // ! toto je vždy volané len keď to je globálne!, takže aj výmaz zo storage
+// ! toto je vždy volané len keď to je globálne!, takže aj výmaz zo storage
 function premium_false() {
   premium_this_game = false;
   premium = false;
-  premium_info.innerText = "-";
   premium_info.style.color = "burlywood";
+  premium_info.innerText = "-";
   sessionStorage.setItem("premium", false);
 }
 
-// tlačidlo reset - stopni a resetni hru, ale rekordné skóre nenulujem
+// funkcia pre tlačidlo reset - stopni a resetni hru, ale rekordné skóre nenulujem
 // stopni zobrazovanie kociek aj meranie času
-button_rst.addEventListener("click", () => {
+function reset_the_game() {
   if (canVibrate) window.navigator.vibrate(30);
-  // ak hra nebežala, nie je čo resetovať...
-    if (!game_running) {
-    return;
-  }
+  // stopni časovače
   clearInterval(interval_cubes);
   clearInterval(interval_stopwatch);
+  // prekresli tlačidlo štart (kontrola klikania sa zruší potom v resete...)
   button_start.style.backgroundColor = "green";
   button_start.innerText = "Štart";
   change_interval = 1000; // vráť rýchlosť ak bola spomalená
-  // nahranú prémiu z tejto hry zruš... (ak nebola predtým už dajaká nahraná tak zruš aj tú globálnu)
+  // nahranú prémiu z tejto hry zruš... (ak nebola predtým už dajaká nahraná tak zruš ju rovno globálne)
   // * tu by stačilo kontrolovať len globálnu... A v prípade false vykonať funkcie premium_false, a inak by zostala globálna ako bola...
   if (premium_this_game && !premium) {
     premium_false();
   }
-  // mrkni ešte či sa počas hry neotočilo mobilom, bolo to bloknuté...
-  resize_cubes();
+  // vykonaj reset
   reset();
-});
+};
 
- // funkcia len generuje nové hodnoty kociek a zobrazí ich
+// funkcia len generuje nové hodnoty kociek a zobrazí / prekreslí ich
 function change_cubes() {
   cube_number1 = Math.floor(Math.random() * 6 + 1);
   cube1.innerHTML = cube_values[cube_number1];
@@ -341,17 +337,26 @@ function change_cubes() {
   cube3.innerHTML = cube_values[cube_number3];
 }
 
- // kontrola behu hry, či nevypršal čas a jeho zobrazenie...
+// kontrola behu hry, či nevypršal čas a jeho zobrazenie...
 function stopwatch() {
+  // odpočet
   counter--;
+  // zobraz novú hodnotu odpočtu hru
   counter_info.innerText = counter;
   if (counter == 0) {
+    //tu nastal koniec hry - vypršal čas...
+    // blokni hneď tlačidlo Klik - keby som chcel efektnejší nábeh konca aby sa to neprebíjalo...
+    button_start.removeEventListener("click", click_control);
+    // zruš aj okamžite kontrolu tlačidla Reset, má fungovať iba ak beží hra...
+    button_rst.removeEventListener("click", reset_the_game);
+    // vykonaj funkciu stop
     stop();
   }
 }
 
-// zastav hru, koniec...
+// zastav hru, koniec hry (nie je to to isté ako reset!, len dosť podobné)...
 function stop() {
+  // stav hry - nebeží
   game_running = false;
   // stopni zobrazovanie kociek aj meranie času
   clearInterval(interval_cubes);
@@ -419,7 +424,7 @@ function final() {
   final_info.style.display = "flex";
   // kontrola či sa nekliklo - ak áno tak skry tento blok a reset hry...
   setTimeout(() => {
-    // ! aby sa v zápale hry nekliklo okamžite po konci na ten blok, tak je tu časovač na spustenie
+    // aby sa v zápale hry nekliklo okamžite po konci na ten blok, tak je tu časovač na spustenie, tlačidlá sú aj tak už neaktíve... Môžem ten finál aj načasovať dajako efektnejšie...
     final_info.addEventListener("click", remove_final);
     // zviditeľni ten text s info o reštarte
     document.getElementById("restart_click").style.color = "white";
@@ -428,6 +433,8 @@ function final() {
 
 // nulovanie premenných a prekreslenie obsahu na hracej ploche
 function reset() {
+  // zruš kontrolu tlačidla Reset, má fungovať iba ak beží hra...
+  button_rst.removeEventListener("click", reset_the_game);
   current = 0;
   score = 0;
   counter = timer;
@@ -445,6 +452,10 @@ function reset() {
   rules_button.addEventListener("click", rules_show);
   // a kontroluj aj resize pri otáčaní mobilov či tabletov
   window.addEventListener("resize", resize_cubes);
+  // zruš kontrolu tlačidla Klik - bude Štart tlačidlo
+  button_start.removeEventListener("click", click_control);
+  // kontroluj či sa nestlačilo tlačidlo Štart - pre štart hry
+  button_start.addEventListener("click", start_the_game);
 }
 
 // odstráň blok a zruš mu zasa event listener na klik
@@ -452,18 +463,17 @@ function remove_final() {
   final_info.style.display = "none";
   final_info.removeEventListener("click", remove_final);
   if (canVibrate) window.navigator.vibrate(60);
-  // mrkni či sa počas hry neotočilo mobilom
-  resize_cubes();
   reset();
 }
-// ak sa kliklo, zobraz pravidlá a potom ich na klik zasa zruš
+
+// ak sa kliklo na pravidlá, zobraz pravidlá a potom ich na klik zasa zruš
 function rules_show() {
   if (canVibrate) window.navigator.vibrate(20);
-  rules_info.style.height = "100vh";
   rules_info.addEventListener("click", function () {
     if (canVibrate) window.navigator.vibrate(20);
     rules_info.style.height = "0";
   });
+  rules_info.style.height = "100vh";
 }
 
 // ak nastalo resize tak zasa zmeraj nové hodnoty šírky, predefinuj pole kociek a prekresli ich
