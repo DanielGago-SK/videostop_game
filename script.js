@@ -18,7 +18,7 @@ rules_button = document.getElementById("rules_button");
 rules_info = document.getElementById("rules_info");
 current = 0; // aktuálny klik
 score = 0; // skóre
-timer = 120; // dĺžka hry v sekundách
+timer = 20; // dĺžka hry v sekundách
 counter = timer; // časomiera - odpočítavanie
 change_interval = 1000; // interval pre zmenu hodnoty kociek
 game_running = false; // stav hry - nebeží...
@@ -350,6 +350,10 @@ function stopwatch() {
   // odpočet
   counter--;
   // zobraz novú hodnotu odpočtu času hry
+  if (counter < 10) {
+    // hodnota pod 10 sekúnd červená, blíži sa koniec hry...
+    counter_info.style.color = "red"; 
+  }
   counter_info.innerText = counter;
   if (counter == 0) {
     //tu nastal koniec hry - vypršal čas...
@@ -452,6 +456,7 @@ function reset() {
   score_info.innerText = score;
   record_info.innerText = new_record;
   premium_this_game = false;
+  counter_info.style.color = "var(--txt_color)"; 
   counter_info.innerText = timer;
   // 7. objekt v poli je plná kocka...
   // takto je fajn vidieť že hra stojí
