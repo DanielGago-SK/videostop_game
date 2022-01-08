@@ -255,6 +255,7 @@ function start_the_game() {
   interval_stopwatch = setInterval(stopwatch, 1000);
   // počas hry zruš možnosť klikania na info tlačidlo, pre istotu...
   rules_button.removeEventListener("click", rules_show);
+  rules_button.style.cursor = "auto";
   // hra sa rozbehla, štart už zablokuj, odblokuje sa Klik...
   button_start.removeEventListener("click", start_the_game);
   button_start.addEventListener("click", click_control);
@@ -464,6 +465,7 @@ function reset() {
   cube2.innerHTML = cube_values[7];
   cube3.innerHTML = cube_values[7];
   // aktivácia tlačidla s pravidlami, aby bolo k dispozícii
+  rules_button.style.cursor = "pointer";
   rules_button.addEventListener("click", rules_show);
   // zruš kontrolu tlačidla Klik - bude Štart tlačidlo
   button_start.removeEventListener("click", click_control);
