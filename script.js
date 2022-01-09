@@ -255,11 +255,12 @@ function start_the_game() {
   interval_stopwatch = setInterval(stopwatch, 1000);
   // počas hry zruš možnosť klikania na info tlačidlo, pre istotu...
   rules_button.removeEventListener("click", rules_show);
-  rules_button.style.cursor = "auto";
+  rules_button.style.cursor = "not-allowed";
   // hra sa rozbehla, štart už zablokuj, odblokuje sa Klik...
   button_start.removeEventListener("click", start_the_game);
   button_start.addEventListener("click", click_control);
   // aktivuj kontrolu tlačidla Reset, má fungovať iba ak beží hra...
+  button_rst.style.cursor = "pointer";
   button_rst.addEventListener("click", reset_the_game);
 }
 
@@ -449,6 +450,7 @@ function final() {
 function reset() {
   // zruš kontrolu tlačidla Reset, má fungovať iba ak beží hra...
   button_rst.removeEventListener("click", reset_the_game);
+  button_rst.style. cursor = "auto";
   current = 0;
   score = 0;
   counter = timer;
@@ -465,7 +467,7 @@ function reset() {
   cube2.innerHTML = cube_values[7];
   cube3.innerHTML = cube_values[7];
   // aktivácia tlačidla s pravidlami, aby bolo k dispozícii
-  rules_button.style.cursor = "pointer";
+  rules_button.style.cursor = "help";
   rules_button.addEventListener("click", rules_show);
   // zruš kontrolu tlačidla Klik - bude Štart tlačidlo
   button_start.removeEventListener("click", click_control);

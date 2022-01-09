@@ -107,6 +107,7 @@ svg {
 
 #start {
   background-color: green;
+  cursor: pointer;
 }
 
 p {
