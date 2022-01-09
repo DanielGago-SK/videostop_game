@@ -51,19 +51,6 @@ if (sessionStorage.getItem("premium")) {
   premium_false();
 }
 
-// počiatočná kontrola šírky display-a
-// ? aké veľké budú kocky
-// ? aká je šírka pre ne
-/* ak nad 500px tak budú 150px, inak len 100px */
-control_width = document.querySelector(".width").clientWidth;
-if (control_width > 499) {
-  box = 150;
-  circle_r = 14;
-} else {
-  box = 100;
-  circle_r = 10;
-}
-
 // pole s grafikou kociek
 // je tu aj nula - bez guličiek, keby sa to hodilo, a aj 7 - to je plná kocka
 // tá nula mi zabezpečila aj to že môžem číslovať teraz pole rovno podľa hodnoty 1-6
@@ -80,6 +67,11 @@ cube_stroke_width = 5;
 color_circle_bgr = "#2f4858";
 color_circle_stroke = "#000";
 circle_stroke_width = 1;
+box = 150;
+circle_r = 14;
+
+// hneď na úvod resize a to uskutoční aj reset hry
+resize_cubes();
 
 // ! definíciu poľa musím mať ako funkciu, inak neprekreslím veľkosti kociek ak ich potrebujem meniť počas behu aplikácie (resize)... treba to znovu zavolať...
 define_cube_array();
@@ -88,13 +80,13 @@ function define_cube_array() {
   cube_values = [
     // 0
     `
-		<svg width="${box + 10}" height="${box + 10}">
+		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
 			</svg>`,
     // 1
     `
-		<svg width="${box + 10}" height="${box + 10}">
+		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
 			<circle cx="${box / 2 + 5}" cy="${
@@ -103,7 +95,7 @@ function define_cube_array() {
 			</svg>`,
     // 2
     `
-		<svg width="${box + 10}" height="${box + 10}">
+		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
 			<circle cx="${box / 4}" cy="${
@@ -116,7 +108,7 @@ function define_cube_array() {
 		</svg>`,
     // 3
     `
-		<svg width="${box + 10}" height="${box + 10}">
+		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
 
@@ -132,7 +124,7 @@ function define_cube_array() {
 		</svg>`,
     // 4
     `
-		<svg width="${box + 10}" height="${box + 10}">
+		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
 			<circle cx="${box / 4}" cy="${
@@ -150,7 +142,7 @@ function define_cube_array() {
 		</svg>`,
     // 5
     `
-		<svg width="${box + 10}" height="${box + 10}">
+		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
 			<circle cx="${box / 4}" cy="${
@@ -171,7 +163,7 @@ function define_cube_array() {
 		</svg>`,
     // 6
     `
-		<svg width="${box + 10}" height="${box + 10}">
+		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
 			<circle cx="${box / 4}" cy="${
@@ -195,7 +187,7 @@ function define_cube_array() {
 		</svg>`,
     // 7 - full
     `
-		<svg width="${box + 10}" height="${box + 10}">
+		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
 			<circle cx="${box / 4}" cy="${
@@ -232,10 +224,7 @@ function define_cube_array() {
 // ! na úvod kontrola či funguje vibrovanie (len Android to podporuje, iOS nie! a hra sa kvôli tomu zasekla...)
 const canVibrate = window.navigator.vibrate;
 
-// hneď na úvod reset hry
-reset();
-
-// a pridaj kontrolu na možnosť resize kociek!
+// pridaj kontrolu na možnosť resize kociek!
 window.addEventListener("resize", resize_cubes);
 /* po novom môžem mať resize neustále aktívne - na to aby mi to neurobilo reset si dáva pozor - pri aktívnej hre sa vykoná táto funkcia bez resetu... */
 
@@ -354,7 +343,7 @@ function stopwatch() {
   // zobraz novú hodnotu odpočtu času hry
   if (counter < 10) {
     // hodnota pod 10 sekúnd červená, blíži sa koniec hry...
-    counter_info.style.color = "red"; 
+    counter_info.style.color = "red";
   }
   counter_info.innerText = counter;
   if (counter == 0) {
@@ -450,7 +439,7 @@ function final() {
 function reset() {
   // zruš kontrolu tlačidla Reset, má fungovať iba ak beží hra...
   button_rst.removeEventListener("click", reset_the_game);
-  button_rst.style. cursor = "auto";
+  button_rst.style.cursor = "auto";
   current = 0;
   score = 0;
   counter = timer;
@@ -459,7 +448,7 @@ function reset() {
   score_info.innerText = score;
   record_info.innerText = new_record;
   premium_this_game = false;
-  counter_info.style.color = "var(--txt_color)"; 
+  counter_info.style.color = "var(--txt_color)";
   counter_info.innerText = timer;
   // 7. objekt v poli je plná kocka...
   // takto je fajn vidieť že hra stojí
@@ -495,16 +484,17 @@ function rules_show() {
 
 // ak nastalo resize tak zasa zmeraj nové hodnoty šírky, predefinuj pole kociek a prekresli ich
 function resize_cubes() {
+  // zisti šírku pre kocky
   control_width = document.querySelector(".width").clientWidth;
-  if (control_width > 499) {
-    box = 150;
-    circle_r = 14;
-  } else {
-    box = 100;
-    circle_r = 10;
+  // prepočítaj možnú šírku a výšku pre konkrétnu kocku
+  svg_size = control_width / 3 - 24;
+  // nech nie je viac ako 200, je to už moc veľké...
+  if (svg_size > 200) {
+    svg_size = 200;
   }
+  // zadefinuj nové vlastnosti kociek
   define_cube_array();
-  // ak hra nebeží tak aj prekresli pole, inak sa prekreslí vlastne samo - pri najbližšej zmene hodnôt kociek
+  // ak hra nebeží tak reset - prekreslí to kocky. Ale ak beží tak sa prekreslia samé...
   // ! a nemôžem ten Reset volať vždy, teda aj uprostred hry... Resetol by som hru...
   if (!game_running) {
     reset();
