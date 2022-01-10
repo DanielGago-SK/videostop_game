@@ -312,7 +312,7 @@ function final() {
     // aby sa v zápale hry nekliklo okamžite po konci na ten blok, tak je tu časovač na spustenie. Tlačidlá ovládania hry sú aj tak už neaktívne - môžem ten finál v budúcnosti nakódovať aj dajako efektnejšie...
     final_info.addEventListener("click", remove_final);
     // zviditeľni ten text s info o reštarte a čakaj na kliknutie
-    document.getElementById("restart_click").style.color = "white";
+    document.getElementById("restart_click").style.color = "red";
   }, 2000);
 }
 
