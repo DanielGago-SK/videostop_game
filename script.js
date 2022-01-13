@@ -303,7 +303,7 @@ function final() {
       <p>Skončil(a) si s nulovým skóre...<br><span style="color: red;">Si nula...</span></p>`;
   }
   // info o reštarte sa zobrazí neviditeľno, až neskôr sa zvidieľný - a je to potom bez trhania a pohybu, nie ako pri pridávaní p elementu...
-  end_status += `<p id = "restart_click" style = "color: rgba(34, 34, 34, 0.85); font-size: 1rem; padding-top: 0.5rem;">Klikni na obrazovku pre reštart hry...</p>`;
+  end_status += `<p id = "restart_click" style = "color: var(--txt_bgr_color); font-size: 1rem; padding-top: 0.5rem;">Klikni na obrazovku pre reštart hry...</p>`;
   // zobraz ten blok
   final_info.innerHTML = end_status;
   final_info.style.display = "flex";
@@ -349,7 +349,7 @@ function resize_cubes() {
   }
   // zadefinuj nové vlastnosti kociek
   define_cube_array();
-  // ak hra nebeží, tak reset - prekreslí to kocky. Ale ak beží, tak sa prekreslia automaticky...
+  // ak hra nebeží, tak aj reset - prekreslí to kocky. Ale ak beží, tak sa prekreslia automaticky...
   // ! a nemôžem ten Reset volať vždy, teda aj uprostred hry... Resetol by som hru...
   if (!game_running) {
     reset();

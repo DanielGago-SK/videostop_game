@@ -10,6 +10,7 @@
   --bgr_color: rgb(53, 53, 71);
   --txt_color: burlywood;
   --txt_color2: black;
+  --txt_bgr_color: rgba(34, 34, 34, 0.85);
   /*--bgr_color: rgb(177, 177, 177);
   --txt_color:rgb(32, 32, 32);
   --txt_color2: black;*/
@@ -137,7 +138,7 @@ p {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(34, 34, 34, 0.85);
+  background-color: var(--txt_bgr_color);
   color: white;
   font-size: 2rem;
   display: none;
@@ -164,7 +165,7 @@ p {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(34, 34, 34, 0.95);
+  background-color: var(--txt_bgr_color);
   color: white;
   font-size: 2rem;
   display: flex;
