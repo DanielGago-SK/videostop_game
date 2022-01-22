@@ -6,15 +6,12 @@
 }
 
 :root {
-  /*--bgr_color:#292979;*/
   --bgr_color: rgb(53, 53, 71);
   --txt_color: burlywood;
   --txt_color2: black;
-  --txt_bgr_color: rgba(34, 34, 34, 0.85);
+  --txt_bgr_color: rgb(34, 34, 34);
+  --txt_bgr_color: rgba(34, 34, 34, 0.9);
   --bgr_color_red: rgb(255, 68, 68);
-  /*--bgr_color: rgb(177, 177, 177);
-  --txt_color:rgb(32, 32, 32);
-  --txt_color2: black;*/
 }
 
 body {
