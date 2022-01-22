@@ -42,8 +42,27 @@ body {
   color: var(--txt_color);
   text-align: right;
   padding: 1rem;
+  cursor: help;
+}
+
+/*
+todo prepínanie jazykov - v prípave
+.language_buttons {
+text-align: center;
+  color: var(--txt_color);
+  padding: 1rem;
   cursor: pointer;
 }
+.language_buttons span {
+  margin-left: 0.25rem;
+  padding: 1px;
+}
+
+.language_buttons span:hover, 
+.activ {
+  color:var(--bgr_color);
+  background-color: var(--txt_color);
+}*/
 
 .width h1 {
   font-size: 3rem;
