@@ -303,7 +303,7 @@ function final() {
       <p>Skončil(a) si s nulovým skóre...<br><span style="color: red;">Si nula...</span></p>`;
   }
   // info o reštarte sa zobrazí neviditeľno, až neskôr sa zvidieľný - a je to potom bez trhania a pohybu, nie ako pri pridávaní p elementu...
-  end_status += `<p id = "restart_click" style = "color: var(--txt_bgr_color); font-size: 1rem; padding-top: 0.5rem;">Klikni na obrazovku pre reštart hry...</p>`;
+  end_status += `<p id = "restart_click" style = "color: var(--txt_bgr_color); font-size: 1rem; margin-top: 0.5rem; padding: 0 3px 2px 3px;">Klikni na obrazovku pre reštart hry...</p>`;
   // zobraz ten blok
   final_info.innerHTML = end_status;
   final_info.style.display = "flex";
@@ -312,7 +312,8 @@ function final() {
     // aby sa v zápale hry nekliklo okamžite po konci na ten blok, tak je tu časovač na spustenie. Tlačidlá ovládania hry sú aj tak už neaktívne - môžem ten finál v budúcnosti nakódovať aj dajako efektnejšie...
     final_info.addEventListener("click", remove_final);
     // zviditeľni ten text s info o reštarte a čakaj na kliknutie
-    document.getElementById("restart_click").style.color = "red";
+    document.getElementById("restart_click").style.color = "white";
+    document.getElementById("restart_click").style.backgroundColor = "var(--bgr_color_red";
   }, 2000);
 }
 

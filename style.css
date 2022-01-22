@@ -11,6 +11,7 @@
   --txt_color: burlywood;
   --txt_color2: black;
   --txt_bgr_color: rgba(34, 34, 34, 0.85);
+  --bgr_color_red: rgb(255, 68, 68);
   /*--bgr_color: rgb(177, 177, 177);
   --txt_color:rgb(32, 32, 32);
   --txt_color2: black;*/
@@ -104,7 +105,7 @@ svg {
 }
 
 #rst {
-  background-color: rgb(255, 68, 68);
+  background-color: var(--bgr_color_red)
 }
 
 #start {
