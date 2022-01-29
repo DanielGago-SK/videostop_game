@@ -88,7 +88,7 @@ function reset() {
   premium_this_game = false; // prémia v aktuálnej hre - zrušená
   // počítadlo času hry - zrušená červená farba textu a zobraz hodnotu časovača
   counter_info.style.color = "var(--txt_color)";
-  counter_info.innerText = timer;
+  counter_info.innerText = counter;
   // 7. objekt v poli je plná kocka...
   // takto je fajn vidieť že hra stojí
   cube1.innerHTML = cube_values[7];
@@ -153,7 +153,7 @@ function click_control() {
     premium_true();
     score += 6;
     score_info.innerText = score;
-    last_click.innerText = "+ 6 bodov 👍";
+    last_click.innerText = " + 6 bodov 👍";
   } else if (
     // ak sú aspoň dve rovnaké, pridaj body
     cube_number1 == cube_number2 ||
@@ -167,7 +167,7 @@ function click_control() {
     // žiadna zhoda, body dolu
     score -= 3;
     score_info.innerText = score;
-    last_click.innerText = "-3 body 👎";
+    last_click.innerText = " -3 body 👎";
     if (score < 0) {
       // ak skóre padlo pod nulu - koniec...
       // ! a prémia je v čudu taktiež - globálne!
@@ -229,11 +229,7 @@ function stopwatch() {
   }
   counter_info.innerText = counter;
   if (counter == 0) {
-    //tu nastal koniec hry - vypršal čas...
-    // blokni hneď tlačidlo Klik - keby som chcel efektnejší nábeh konca aby sa to neprebíjalo...
-    button_start.removeEventListener("click", click_control);
-    // zruš aj okamžite kontrolu tlačidla Reset, má fungovať iba ak beží hra...
-    button_rst.removeEventListener("click", reset_the_game);
+    // tu nastal koniec hry - vypršal čas...
     // vykonaj funkciu stop
     stop();
   }
@@ -242,6 +238,10 @@ function stopwatch() {
 //*** zastav hru, koniec hry (nie je to to isté ako reset!, len dosť podobné)...
 // tu totiž ide aj o ten záver - final funkciu
 function stop() {
+  // blokni hneď tlačidlo Klik - keby som chcel efektnejší nábeh konca aby sa to neprebíjalo...
+  button_start.removeEventListener("click", click_control);
+  // zruš aj okamžite kontrolu tlačidla Reset, má fungovať iba ak beží hra...
+  button_rst.removeEventListener("click", reset_the_game);
   // stav hry - nebeží
   game_running = false;
   // stopni zobrazovanie kociek aj meranie času
