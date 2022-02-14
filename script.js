@@ -224,7 +224,7 @@ function stopwatch() {
   // zobraz novú hodnotu odpočtu času hry
   if (counter < 10) {
     // hodnota pod 10 sekúnd červená, blíži sa koniec hry...
-    counter_info.style.color = "red";
+    counter_info.style.color = "var(--bgr_color_red)";
   }
   counter_info.innerText = counter;
   if (counter == 0) {
@@ -284,7 +284,7 @@ function final() {
     // nastav záverečnú grafiku pre diamant - zväčši ho
     set_final_premium_svg();
     end_status += `
-        <p>Aj prémia <span style="font-size: 1.35rem">${premium_diamond}</span> bola. <br> 👍</p>`;
+        <p>Aj prémia <span>${premium_diamond}</span> bola. <br> 👍</p>`;
     // grafiku pre diamant vráť naspäť!!
     set_premium_svg();
     // a ulož premiu aj globálne
