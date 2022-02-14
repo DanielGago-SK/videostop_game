@@ -22,6 +22,9 @@ counter = timer; // časomiera - odpočítavanie
 interval = 1000; // interval pre zmenu hodnoty kociek
 game_running = false; // stav hry - nebeží...
 
+// načítaj grafiku pre prémiu
+set_premium_svg();
+
 // ? je v pamäti uložený dajaký rekord
 // tento kód sa uskutočný iba ak existoval záznam
 if (sessionStorage.getItem("new_record")) {
@@ -182,8 +185,7 @@ function click_control() {
 // zobrazí sa a uloží stav - len pre túto hru, teda nie aj do Storage!
 function premium_true() {
   premium_this_game = true;
-  premium_info.innerText = "♥";
-  premium_info.style.color = "red";
+  premium_info.innerHTML = premium_diamond;
 }
 
 //*** prišli sme o prémiu
@@ -191,8 +193,7 @@ function premium_true() {
 function premium_false() {
   premium_this_game = false;
   premium = false;
-  premium_info.style.color = "var(--txt_color)";
-  premium_info.innerText = "-";
+  premium_info.innerHTML = "-";
   sessionStorage.setItem("premium", false);
 }
 
@@ -215,8 +216,6 @@ function reset_the_game() {
   // vykonaj reset
   reset();
 }
-
-
 
 //*** kontrola behu hry, či nevypršal čas a jeho zobrazenie...
 function stopwatch() {
@@ -282,8 +281,12 @@ function final() {
   }
   // kontrola dosiahnutej prémie (v tejto hre) a daj to vedieť
   if (premium_this_game) {
+    // nastav záverečnú grafiku pre diamant - zväčši ho
+    set_final_premium_svg();
     end_status += `
-        <p>Aj prémia <span style = "color: red;">♥</span> bola. <br> 👍</p>`;
+        <p>Aj prémia <span style="font-size: 1.35rem">${premium_diamond}</span> bola. <br> 👍</p>`;
+    // grafiku pre diamant vráť naspäť!!
+    set_premium_svg();
     // a ulož premiu aj globálne
     premium = premium_this_game;
     // možný zápis aj premium = true;
@@ -314,11 +317,10 @@ function final() {
     final_info.addEventListener("click", remove_final);
     // zviditeľni ten text s info o reštarte a čakaj na kliknutie
     document.getElementById("restart_click").style.color = "white";
-    document.getElementById("restart_click").style.backgroundColor = "var(--bgr_color_red";
+    document.getElementById("restart_click").style.backgroundColor =
+      "var(--bgr_color_red";
   }, 2000);
 }
-
-
 
 //*** odstráň blok s finálnymi informáciami a zruš mu zasa event listener na klik
 function remove_final() {
@@ -506,4 +508,67 @@ function define_cube_array() {
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
 		</svg>`,
   ];
+}
+
+function set_final_premium_svg() {
+  // svg grafika pre prémiu
+  // výška a šírka je podľa veľkosti finálneho textu
+  diamod_size = window.getComputedStyle(
+    document.getElementById("final_info")
+  ).fontSize;
+  set_svg();
+}
+
+function set_premium_svg() {
+  // svg grafika pre prémiu
+  // výška a šírka je podľa veľkosti infotextu pre prémiu textu
+  diamod_size = window.getComputedStyle(
+    document.getElementById("premium")
+  ).fontSize;
+  set_svg();
+}
+
+function set_svg() {
+  premium_diamond = `
+<svg
+width="${diamod_size}" height="${diamod_size}" 
+  x="0px"
+  y="0px"
+viewBox="0 0 58 58" style="enable-background:new 0 0 58 58;" xml:space="preserve">
+<polygon style="fill:#CC2E48;" points="29,55 0,19 58,19 "/>
+<polygon style="fill:#FC3952;" points="58,19 0,19 10,3 48,3 "/>
+<polygon style="fill:#F76363;" points="42.154,19 48,3 10,3 15.846,19 "/>
+<polygon style="fill:#F49A9A;" points="42,19 29,3 16,19 "/>
+<polygon style="fill:#CB465F;" points="15.846,19 29,55 42.154,19 "/>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>`;
 }
