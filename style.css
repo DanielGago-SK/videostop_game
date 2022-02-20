@@ -141,6 +141,13 @@ p {
   letter-spacing: 0.5px;
 }
 
+@media only screen and (max-width: 550px) {
+  .info_block {
+text-align: left;
+padding-left: 1rem;
+  }
+}
+
 .info_block p {
   padding-bottom: 0.5rem;
 }
