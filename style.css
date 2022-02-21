@@ -93,7 +93,7 @@ text-align: center;
   justify-content: space-evenly;
 }
 
-svg {
+.top_cubes svg {
   display: inline-block;
   max-height: 50vh;
 }
