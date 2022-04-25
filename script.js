@@ -22,8 +22,9 @@ counter = timer; // časomiera - odpočítavanie
 interval = 1000; // interval pre zmenu hodnoty kociek
 game_running = false; // stav hry - nebeží...
 
-// načítaj grafiku pre prémiu
-set_premium_svg();
+// načítaj do premennej svg grafiku pre prémiu
+// je to dlhý kód, tak nech to nevypisujem potom do kódu...
+get_premium_svg();
 
 // ? je v pamäti uložený dajaký rekord
 // tento kód sa uskutočný iba ak existoval záznam
@@ -281,12 +282,8 @@ function final() {
   }
   // kontrola dosiahnutej prémie (v tejto hre) a daj to vedieť
   if (premium_this_game) {
-    // nastav záverečnú grafiku pre diamant - zväčši ho
-    set_final_premium_svg();
     end_status += `
         <p>Aj prémia <span>${premium_diamond}</span> bola. <br> 👍</p>`;
-    // grafiku pre diamant vráť naspäť!!
-    set_premium_svg();
     // a ulož premiu aj globálne
     premium = premium_this_game;
     // možný zápis aj premium = true;
@@ -510,28 +507,11 @@ function define_cube_array() {
   ];
 }
 
-function set_final_premium_svg() {
-  // svg grafika pre prémiu
-  // výška a šírka je podľa veľkosti finálneho textu
-  diamod_size = window.getComputedStyle(
-    document.getElementById("final_info")
-  ).fontSize;
-  set_svg();
-}
-
-function set_premium_svg() {
-  // svg grafika pre prémiu
-  // výška a šírka je podľa veľkosti infotextu pre prémiu textu
-  diamod_size = window.getComputedStyle(
-    document.getElementById("premium")
-  ).fontSize;
-  set_svg();
-}
-
-function set_svg() {
+function get_premium_svg() {
+  // v premennej "premium_diamond" bude uložený kód pre svg diamant, kvôli jeho dĺžke
   premium_diamond = `
 <svg
-width="${diamod_size}" height="${diamod_size}" 
+width="1em" height="1em" 
   x="0px"
   y="0px"
 viewBox="0 0 58 58" style="enable-background:new 0 0 58 58;" xml:space="preserve">
