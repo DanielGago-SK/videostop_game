@@ -2,13 +2,12 @@
 Hra 3 kocky - JS súbor
 */
 
-//*** naťahaj potrebné objekty a zadefinuj potrebné premenné
-cube1 = document.getElementById("cube1");
-cube2 = document.getElementById("cube2");
-cube3 = document.getElementById("cube3");
-button_rst = document.getElementById("rst");
-button_start = document.getElementById("start");
-info_block = document.getElementById("info_block");
+// načítaj do premennej svg grafiku pre prémiu
+// je to dlhý kód, tak nech to nevypisujem potom viac krát do kódu...
+get_premium_svg();
+
+/* v rámci prípravy na zmenu jazykov tu musím tie texty generovať takto... */
+/* ak teda pridám zmenu jazykov, tak podľa zvoleného jazyka sa prepíše vnútorný html obsah */
 info_block.innerHTML = `
 <p>Skóre: <span id="score">0</span></p>
 			<p class="small">Posledný klik: <span id="last_click"></span></p>
@@ -16,58 +15,12 @@ info_block.innerHTML = `
 			<p>Prémia: <span id="premium"></span></p>
 			<p>Čas do konca (sekundy): <span id="counter"></span></p>
 `;
-score_info = document.getElementById("score");
-last_click = document.getElementById("last_click");
-record_info = document.getElementById("record");
-premium_info = document.getElementById("premium");
-counter_info = document.getElementById("counter");
-final_info = document.getElementById("final_info");
-rules_button = document.getElementById("rules_button");
-rules_info = document.getElementById("rules_info");
-/* v rámci prípravy na zmenu jazykov tu musím tie texty generovať takto... */
-/* ak teda pridám zmenu jazykov tak podľa zvoleného jazyka sa prepíše tento vnútorný html obsah pre rules_info blok */
+
 rules_info.innerHTML = `
 <p><b>Pravidlá:</b><br>
 			Cieľom hry je získavať body za klikanie v "správnom čase". Treba sledovať hodnoty kociek.
 			Za dve rovnaké hodnoty sú 2 body, za tri rovnaké hodnoty 6 bodov (a "prémia"
-			<svg width="1em" height="1em" x="0px" y="0px" viewBox="0 0 58 58" style="enable-background:new 0 0 58 58;"
-				xml:space="preserve">
-				<polygon style="fill:#CC2E48;" points="29,55 0,19 58,19 " />
-				<polygon style="fill:#FC3952;" points="58,19 0,19 10,3 48,3 " />
-				<polygon style="fill:#F76363;" points="42.154,19 48,3 10,3 15.846,19 " />
-				<polygon style="fill:#F49A9A;" points="42,19 29,3 16,19 " />
-				<polygon style="fill:#CB465F;" points="15.846,19 29,55 42.154,19 " />
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-			</svg>, ktorá sa ale zruší, ak hra
+			${premium_diamond}, ktorá sa ale zruší, ak hra
 			skončí
 			kvôli skóre pod nulou!). Ak nie je zhoda, tak -3 body... <br>
 			Klikaj preto s rozvahou... 🙂<br>
@@ -80,15 +33,27 @@ rules_info.innerHTML = `
 			&copy;12/2021 Daniel Gago
 		</p>
     `;
+
+//*** naťahaj potrebné objekty a zadefinuj potrebné premenné
+cube1 = document.getElementById("cube1");
+cube2 = document.getElementById("cube2");
+cube3 = document.getElementById("cube3");
+button_rst = document.getElementById("rst");
+button_start = document.getElementById("start");
+info_block = document.getElementById("info_block");
+premium_info = document.getElementById("premium");
+last_click = document.getElementById("last_click");
+counter_info = document.getElementById("counter");
+score_info = document.getElementById("score");
+record_info = document.getElementById("record");
+final_info = document.getElementById("final_info");
+rules_button = document.getElementById("rules_button");
+rules_info = document.getElementById("rules_info");
 score = 0; // skóre
 timer = 120; // dĺžka hry v sekundách
 counter = timer; // časomiera - odpočítavanie
 interval = 1000; // interval pre zmenu hodnoty kociek
 game_running = false; // stav hry - nebeží...
-
-// načítaj do premennej svg grafiku pre prémiu
-// je to dlhý kód, tak nech to nevypisujem potom viac krát do kódu...
-get_premium_svg();
 
 // pokus o prevenciu voči refrešu stránky ak beží hra...
 window.onbeforeunload = function (e) {
@@ -319,7 +284,7 @@ function stop() {
   clearInterval(interval_stopwatch);
   // tlačidlo Štart je zasa Štart
   button_start.style.backgroundColor = "green";
-  button_start.innerText = "Štart";
+  button_start.innerText = "Start";
   interval = 1000; // vráť rýchlosť ak bola spomalená
   // spusti funkciu na záverečné zhodnotenie
   final();
