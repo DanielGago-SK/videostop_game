@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="sk">
-<!-- © Daniel Gago Ver:1 - last update 29.1.2022 -->
+<!-- © Daniel Gago Ver:1 - last update 6.2022 -->
 
 <head>
 	<meta charset="UTF-8" />
@@ -59,73 +59,14 @@
 		</div>
 		<div class="buttons">
 			<button id="rst">Reset</button>
-			<button id="start">Štart</button>
+			<button id="start">Start</button>
 		</div>
-		<div class="info_block">
-			<p>Skóre: <span id="score">0</span></p>
-			<p class="small">Posledný klik: <span id="last_click"></span></p>
-			<p class="small">Rekord: <span id="record">0</span></p>
-			<p>Prémia: <span id="premium"></span></p>
-			<p>Čas do konca (sekundy): <span id="counter"></span></p>
-		</div>
+		<div id="info_block"></div>
 
 	</div>
 
 	<div id="final_info"></div>
-	<div id="rules_info">
-		<p><b>Pravidlá:</b><br>
-			Cieľom hry je získavať body za klikanie v "správnom čase". Treba sledovať hodnoty kociek.
-			Za dve rovnaké hodnoty sú 2 body, za tri rovnaké hodnoty 6 bodov (a "prémia"
-			<svg width="1em" height="1em" x="0px" y="0px" viewBox="0 0 58 58" style="enable-background:new 0 0 58 58;"
-				xml:space="preserve">
-				<polygon style="fill:#CC2E48;" points="29,55 0,19 58,19 " />
-				<polygon style="fill:#FC3952;" points="58,19 0,19 10,3 48,3 " />
-				<polygon style="fill:#F76363;" points="42.154,19 48,3 10,3 15.846,19 " />
-				<polygon style="fill:#F49A9A;" points="42,19 29,3 16,19 " />
-				<polygon style="fill:#CB465F;" points="15.846,19 29,55 42.154,19 " />
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-				<g>
-				</g>
-			</svg>, ktorá sa ale zruší, ak hra
-			skončí
-			kvôli skóre pod nulou!). Ak nie je zhoda, tak -3 body... <br>
-			Klikaj preto s rozvahou... 🙂<br>
-			Hra končí keď sa dostaneš v skóre pod "0", alebo po 2 minútach. Tlačidlo Reset ruší iba aktuálnu hru,
-			hodnota "Rekord" zostáva. Ale "Prémia" zostáva iba z daktorej plne dohranej hry, nie z aktuálnej -
-			prerušenej!<br>
-			<br>
-			<span style="background-color: var(--bgr_color_red); padding: 2px 6px 4px 6px; border-radius: 4px;">
-				Klikni pre zrušenie nápovedy.</span><br>
-			&copy;12/2021 Daniel Gago
-		</p>
-	</div>
+	<div id="rules_info"></div>
 
 	<script src="script.js"></script>
 

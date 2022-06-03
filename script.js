@@ -8,6 +8,14 @@ cube2 = document.getElementById("cube2");
 cube3 = document.getElementById("cube3");
 button_rst = document.getElementById("rst");
 button_start = document.getElementById("start");
+info_block = document.getElementById("info_block");
+info_block.innerHTML = `
+<p>Skóre: <span id="score">0</span></p>
+			<p class="small">Posledný klik: <span id="last_click"></span></p>
+			<p class="small">Rekord: <span id="record">0</span></p>
+			<p>Prémia: <span id="premium"></span></p>
+			<p>Čas do konca (sekundy): <span id="counter"></span></p>
+`;
 score_info = document.getElementById("score");
 last_click = document.getElementById("last_click");
 record_info = document.getElementById("record");
@@ -16,6 +24,62 @@ counter_info = document.getElementById("counter");
 final_info = document.getElementById("final_info");
 rules_button = document.getElementById("rules_button");
 rules_info = document.getElementById("rules_info");
+/* v rámci prípravy na zmenu jazykov tu musím tie texty generovať takto... */
+/* ak teda pridám zmenu jazykov tak podľa zvoleného jazyka sa prepíše tento vnútorný html obsah pre rules_info blok */
+rules_info.innerHTML = `
+<p><b>Pravidlá:</b><br>
+			Cieľom hry je získavať body za klikanie v "správnom čase". Treba sledovať hodnoty kociek.
+			Za dve rovnaké hodnoty sú 2 body, za tri rovnaké hodnoty 6 bodov (a "prémia"
+			<svg width="1em" height="1em" x="0px" y="0px" viewBox="0 0 58 58" style="enable-background:new 0 0 58 58;"
+				xml:space="preserve">
+				<polygon style="fill:#CC2E48;" points="29,55 0,19 58,19 " />
+				<polygon style="fill:#FC3952;" points="58,19 0,19 10,3 48,3 " />
+				<polygon style="fill:#F76363;" points="42.154,19 48,3 10,3 15.846,19 " />
+				<polygon style="fill:#F49A9A;" points="42,19 29,3 16,19 " />
+				<polygon style="fill:#CB465F;" points="15.846,19 29,55 42.154,19 " />
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+				<g>
+				</g>
+			</svg>, ktorá sa ale zruší, ak hra
+			skončí
+			kvôli skóre pod nulou!). Ak nie je zhoda, tak -3 body... <br>
+			Klikaj preto s rozvahou... 🙂<br>
+			Hra končí keď sa dostaneš v skóre pod "0", alebo po 2 minútach. Tlačidlo Reset ruší iba aktuálnu hru,
+			hodnota "Rekord" zostáva. Ale "Prémia" zostáva iba z daktorej plne dohranej hry, nie z aktuálnej -
+			prerušenej!<br>
+			<br>
+			<span style="background-color: var(--bgr_color_red); padding: 2px 6px 4px 6px; border-radius: 4px;">
+				Klikni pre zrušenie nápovedy.</span><br>
+			&copy;12/2021 Daniel Gago
+		</p>
+    `;
 score = 0; // skóre
 timer = 120; // dĺžka hry v sekundách
 counter = timer; // časomiera - odpočítavanie
@@ -23,14 +87,20 @@ interval = 1000; // interval pre zmenu hodnoty kociek
 game_running = false; // stav hry - nebeží...
 
 // načítaj do premennej svg grafiku pre prémiu
-// je to dlhý kód, tak nech to nevypisujem potom do kódu...
+// je to dlhý kód, tak nech to nevypisujem potom viac krát do kódu...
 get_premium_svg();
+
+// pokus o prevenciu voči refrešu stránky ak beží hra...
+window.onbeforeunload = function (e) {
+  e.preventDefault();
+  return "Refreš nie je možný, hra beží...";
+};
 
 // ? je v pamäti uložený dajaký rekord
 // tento kód sa uskutočný iba ak existoval záznam
-if (sessionStorage.getItem("new_record")) {
+if (localStorage.getItem("new_record")) {
   // daj do premennej hodnotu toho rekordu
-  new_record = sessionStorage.getItem("new_record");
+  new_record = localStorage.getItem("new_record");
   // občas sa mi zobrazil rekord ako false, nie ako nula, tak preto nasledovná kontrola a korekcia...
   if (new_record == "false") {
     new_record = 0;
@@ -38,13 +108,13 @@ if (sessionStorage.getItem("new_record")) {
   // ak neexistoval záznam tak ho vytvor a ulož, s nulou
 } else {
   new_record = 0;
-  sessionStorage.setItem("new_record", 0);
+  localStorage.setItem("new_record", 0);
 }
 
 // ? je v pamäti uložená prémia
 // obdobne ako pri rekorde - kontrola prémie
-if (sessionStorage.getItem("premium")) {
-  premium = sessionStorage.getItem("premium");
+if (localStorage.getItem("premium")) {
+  premium = localStorage.getItem("premium");
   if (premium == "true") {
     premium_true();
   } else {
@@ -195,7 +265,7 @@ function premium_false() {
   premium_this_game = false;
   premium = false;
   premium_info.innerHTML = "-";
-  sessionStorage.setItem("premium", false);
+  localStorage.setItem("premium", false);
 }
 
 //*** funkcia pre tlačidlo reset - stopni a resetni hru, ale rekordné skóre nenulujem
@@ -277,7 +347,7 @@ function final() {
     `;
     // ulož novú hodnotu do premennej a do pamäti + hneď zobraz
     new_record = score;
-    sessionStorage.setItem("new_record", new_record);
+    localStorage.setItem("new_record", new_record);
     record_info.innerText = new_record;
   }
   // kontrola dosiahnutej prémie (v tejto hre) a daj to vedieť
@@ -287,7 +357,7 @@ function final() {
     // a ulož premiu aj globálne
     premium = premium_this_game;
     // možný zápis aj premium = true;
-    sessionStorage.setItem("premium", true);
+    localStorage.setItem("premium", true);
     // * zobrazená tá prémia už bola počas hry, netreba to riešiť...
   }
   // looser kontrola - body v mínuse...

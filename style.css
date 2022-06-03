@@ -115,13 +115,13 @@ text-align: center;
   padding: 5px 10px;
   border: 1px solid var(--txt_color2);
   border-radius: 5px;
-  /* dvojitý outline okraj, spolu s border teda trojitý okraj... */
+  /* ďalší dvojitý okraj, spolu s border teda trojitý okraj... */
   -webkit-box-shadow: 0 0 0 2pt gray, 0 0 0 3pt black;
-          box-shadow: 0 0 0 2pt gray, 0 0 0 3pt black;
+  box-shadow: 0 0 0 2pt gray, 0 0 0 3pt black;
 }
 
 #rst {
-  background-color: var(--bgr_color_red)
+  background-color: var(--bgr_color_red);
 }
 
 #start {
@@ -134,7 +134,7 @@ p {
   padding-right: 0.5rem;
 }
 
-.info_block {
+#info_block {
   font-size: 1.25rem;
   color: var(--txt_color);
   text-align: center;
@@ -142,17 +142,17 @@ p {
 }
 
 @media only screen and (max-width: 550px) {
-  .info_block {
-text-align: left;
-padding-left: 1rem;
+  #info_block {
+    text-align: left;
+    padding-left: 1rem;
   }
 }
 
-.info_block p {
+#info_block p {
   padding-bottom: 0.5rem;
 }
 
-.info_block .small {
+#info_block .small {
   font-size: 1rem;
 }
 
@@ -179,7 +179,6 @@ padding-left: 1rem;
   align-items: center;
   text-align: center;
 }
-
 
 #rules_info {
   width: 100vw;
