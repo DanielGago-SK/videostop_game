@@ -54,6 +54,7 @@ timer = 120; // dĺžka hry v sekundách
 counter = timer; // časomiera - odpočítavanie
 interval = 1000; // interval pre zmenu hodnoty kociek
 game_running = false; // stav hry - nebeží...
+premium_this_game = 0;
 
 // pokus o prevenciu voči refrešu stránky ak beží hra...
 window.onbeforeunload = function (e) {
@@ -80,7 +81,7 @@ if (localStorage.getItem("new_record")) {
 // obdobne ako pri rekorde - kontrola prémie
 if (localStorage.getItem("premium")) {
   premium = localStorage.getItem("premium");
-  if (premium == "true") {
+  if (premium > 0) {
     premium_true();
   } else {
     premium_false();
@@ -123,8 +124,8 @@ function reset() {
   game_running = false; // hra nebeží
   last_click.innerText = "0"; // posledný klik - 0
   score_info.innerText = score; // skore zobraz - 0
-  record_info.innerText = new_record; // nový rekord zobraz - aktúalny stav
-  premium_this_game = false; // prémia v aktuálnej hre - zrušená
+  record_info.innerText = new_record; // nový rekord zobraz - aktuálny stav
+  premium_this_game = 0; // prémia v aktuálnej hre - zrušená
   // počítadlo času hry - zrušená červená farba textu a zobraz hodnotu časovača
   counter_info.style.color = "var(--txt_color)";
   counter_info.innerText = counter;
@@ -168,7 +169,7 @@ function start_the_game() {
 }
 
 //*** funkcia len generuje nové hodnoty kociek a zobrazí / prekreslí ich
-// ! keďže sa zapína a vypína jej časovanie tak musí byť ako samostatná funkcia !
+// ! keďže sa zapína a vypína jej časovanie, tak musí byť ako samostatná funkcia !
 function change_cubes() {
   // vygeneruj a daj hodnotu do premennej - bude treba pri kontrole stavu kociek
   cube_number1 = Math.floor(Math.random() * 6 + 1);
@@ -189,7 +190,9 @@ function click_control() {
   // ak sú všetky tri rovnaké - prémia + lepšie skóre...
   // ! táto kontrola musí byť prvá !!
   if (cube_number1 == cube_number2 && cube_number1 == cube_number3) {
-    premium_true();
+    premium++; // už tu si nastavím stav
+    premium_this_game++; // pomocný stav na počet prémií v danom kole
+    premium_true(); //zobraz to
     score += 6;
     score_info.innerText = score;
     last_click.innerText = " + 6 bodov 👍";
@@ -220,17 +223,20 @@ function click_control() {
 //*** dosiahla sa prémia - zatiaľ iba v tejto hre!
 // zobrazí sa a uloží stav - len pre túto hru, teda nie aj do Storage!
 function premium_true() {
-  premium_this_game = true;
-  premium_info.innerHTML = premium_diamond;
+  premium_state = "";
+  for (let p_index = 0; p_index < premium; p_index++) {
+    premium_state += premium_diamond;
+  }
+  premium_info.innerHTML = premium_state;
 }
 
 //*** prišli sme o prémiu
 // ! toto je vždy volané len keď to je globálne!, takže aj výmaz zo Storage
 function premium_false() {
-  premium_this_game = false;
-  premium = false;
+  premium_this_game = 0;
+  premium = 0;
   premium_info.innerHTML = "-";
-  localStorage.setItem("premium", false);
+  localStorage.setItem("premium", 0);
 }
 
 //*** funkcia pre tlačidlo reset - stopni a resetni hru, ale rekordné skóre nenulujem
@@ -242,11 +248,15 @@ function reset_the_game() {
   clearInterval(interval_stopwatch);
   // prekresli tlačidlo štart (kontrola klikania sa zruší potom v resete...)
   button_start.style.backgroundColor = "green";
-  button_start.innerText = "Štart";
+  button_start.innerText = "Start";
   interval = 1000; // vráť rýchlosť ak bola spomalená
+  // spomalená rýchlosť je iba ako pomôcka po neúspešnej hre, ak dakto použije reset tak o túto pomôcku jednoducho príde...
   // nahranú prémiu z tejto hry zruš... (ak nebola predtým už dajaká nahraná tak zruš ju rovno globálne)
-  // * tu by stačilo kontrolovať len globálnu... A v prípade false vykonať funkcie premium_false, a inak by zostala globálna ako bola...
-  if (premium_this_game && !premium) {
+  premium = premium - premium_this_game; // vrátim hodnotu premium do pôvodného stavu pred začiatkom hry
+  // prekresly aktuálny stav prémie...
+  if (premium > 0) {
+    premium_true();
+  } else {
     premium_false();
   }
   // vykonaj reset
@@ -292,7 +302,7 @@ function stop() {
 
 //*** záverečné zhodnotenie - zobrazenie finálnej obrazovky
 function final() {
-  // hoď obrazovku hore - dôležité iba pre telefóny na ležato, tam sa hrá mierne nižšie a obrazovka výsledkov je potom mimo...
+  // hoď obrazovku hore - dôležité hlavne pre telefóny na ležato, tam sa hrá mierne nižšie a obrazovka výsledkov je potom mimo...
   window.scrollTo({
     top: 0,
     left: 0,
@@ -316,13 +326,11 @@ function final() {
     record_info.innerText = new_record;
   }
   // kontrola dosiahnutej prémie (v tejto hre) a daj to vedieť
-  if (premium_this_game) {
+  if (premium_this_game > 0) {
     end_status += `
         <p>Aj prémia <span>${premium_diamond}</span> bola. <br> 👍</p>`;
     // a ulož premiu aj globálne
-    premium = premium_this_game;
-    // možný zápis aj premium = true;
-    localStorage.setItem("premium", true);
+    localStorage.setItem("premium", premium);
     // * zobrazená tá prémia už bola počas hry, netreba to riešiť...
   }
   // looser kontrola - body v mínuse...
@@ -332,11 +340,15 @@ function final() {
       <p style = "font-size: 1rem";>(1 kolo trochu spomalíme...)</p>`;
     // hráč to evidentne nestíha, spomalíme na jedno kolo... predĺž interval obnovy kociek
     interval = 1300; // na pevnú hodnotu, nie iba pridávať
+    premium_false(); // a prémia je fuč...
   }
   // kontrola nulového stavu - slabý výkon...
   if (score == 0) {
     end_status += `
-      <p>Skončil(a) si s nulovým skóre...<br><span style="color: red;">Si nula...</span></p>`;
+      <p>Skončil(a) si s nulovým skóre...<br><span style="color: red;">Si nula...</span></p>
+      <p style = "font-size: 1rem";>(1 kolo trochu spomalíme...)</p>`;
+    // hráč to evidentne nestíha, spomalíme na jedno kolo... predĺž interval obnovy kociek
+    interval = 1300; // na pevnú hodnotu, nie iba pridávať
   }
   // info o reštarte sa zobrazí neviditeľno, až neskôr sa zvidieľný - a je to potom bez trhania a pohybu, nie ako pri pridávaní p elementu...
   end_status += `<p id = "restart_click" style = "color: var(--txt_bgr_color); font-size: 1rem; margin-top: 0.5rem; padding: 2px 6px 2px 6px; border-radius: 4px;">Klikni na obrazovku pre reštart hry...</p>`;
@@ -544,6 +556,7 @@ function define_cube_array() {
 
 function get_premium_svg() {
   // v premennej "premium_diamond" bude uložený kód pre svg diamant, kvôli jeho dĺžke
+  // width a height "1em" zabezpečuje že jeho veľkosť zobrazenia bude vždy adekvátna veľkosti okolitého textu kde s azobrazí... To sami hodí, lebo v pravidlách je iná ako v samotnej hre...
   premium_diamond = `
 <svg
 width="1em" height="1em" 
