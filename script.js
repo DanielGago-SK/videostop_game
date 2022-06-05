@@ -328,7 +328,7 @@ function final() {
   // kontrola dosiahnutej prémie (v tejto hre) a daj to vedieť
   if (premium_this_game > 0) {
     end_status += `
-        <p>Aj prémia <span>${premium_diamond}</span> bola. <br> 👍</p>`;
+        <p>Aj prémia(e) <span>${premium_diamond}</span> bola(i). <br> 👍</p>`;
     // a ulož premiu aj globálne
     localStorage.setItem("premium", premium);
     // * zobrazená tá prémia už bola počas hry, netreba to riešiť...
