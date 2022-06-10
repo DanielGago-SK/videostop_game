@@ -61,31 +61,25 @@ window.onbeforeunload = function (e) {
   e.preventDefault();
   return "Refreš nie je možný, hra beží...";
 };
+/* vcelku to funguje... 
+/* môj text síce nezobrazí, ale pýta sa či sa má vykonať refreš alebo odchod zo stránky, no a o to mi šlo... */
 
 // ? je v pamäti uložený dajaký rekord
-// tento kód sa uskutočný iba ak existoval záznam
-if (localStorage.getItem("new_record")) {
-  // daj do premennej hodnotu toho rekordu
-  new_record = localStorage.getItem("new_record");
-  // občas sa mi zobrazil rekord ako false, nie ako nula, tak preto nasledovná kontrola a korekcia...
-  if (new_record == "false") {
-    new_record = 0;
-  }
-  // ak neexistoval záznam tak ho vytvor a ulož, s nulou
-} else {
+// načítaj hodnotu
+new_record = localStorage.getItem("new_record");
+if (!new_record) {
+  // ak je null - neexistoval, tak ho vytvor a ulož s nulou
   new_record = 0;
   localStorage.setItem("new_record", 0);
 }
+// ak tam bola hodnota tak sa potom zobrazí...
 
 // ? je v pamäti uložená prémia
 // obdobne ako pri rekorde - kontrola prémie
-if (localStorage.getItem("premium")) {
-  premium = localStorage.getItem("premium");
-  if (premium > 0) {
-    premium_true();
-  } else {
-    premium_false();
-  }
+premium = localStorage.getItem("premium");
+// ak je hodnota viac ako 0 tak sa zobrazí, ak je 0, alebo nebola - null, tak prémia nie je
+if (premium > 0) {
+  premium_true();
 } else {
   premium_false();
 }
@@ -562,7 +556,7 @@ function get_premium_svg() {
 width="1em" height="1em" 
   x="0px"
   y="0px"
-viewBox="0 0 58 58" style="enable-background:new 0 0 58 58;" xml:space="preserve">
+viewBox="0 0 58 50" style="enable-background:new 0 0 58 58;" xml:space="preserve">
 <polygon style="fill:#CC2E48;" points="29,55 0,19 58,19 "/>
 <polygon style="fill:#FC3952;" points="58,19 0,19 10,3 48,3 "/>
 <polygon style="fill:#F76363;" points="42.154,19 48,3 10,3 15.846,19 "/>
