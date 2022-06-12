@@ -13,7 +13,7 @@ info_block.innerHTML = `
 			<p class="small">Posledný klik: <span id="last_click"></span></p>
 			<p class="small">Rekord: <span id="record">0</span></p>
 			<p>Prémia: <span id="premium"></span></p>
-			<p>Čas do konca (sekundy): <span id="counter"></span></p>
+			<p>Čas do konca: <span id="counter"></span> s</p>
 `;
 
 rules_info.innerHTML = `
@@ -319,10 +319,15 @@ function final() {
     localStorage.setItem("new_record", new_record);
     record_info.innerText = new_record;
   }
-  // kontrola dosiahnutej prémie (v tejto hre) a daj to vedieť
+  // kontrola dosiahnutých prémií (v tejto hre) a daj to vedieť
   if (premium_this_game > 0) {
-    end_status += `
-        <p>Aj prémia(e) <span>${premium_diamond}</span> bola(i). <br> 👍</p>`;
+    if (premium_this_game == 1) {
+      end_status += `
+        <p>Aj prémia <span>${premium_diamond}</span> bola. <br> 👍</p>`;
+    } else {
+      end_status += `
+        <p>Aj prémie <span>${premium_diamond}</span> boli. <br> 👍</p>`;
+    }
     // a ulož premiu aj globálne
     localStorage.setItem("premium", premium);
     // * zobrazená tá prémia už bola počas hry, netreba to riešiť...
@@ -343,6 +348,7 @@ function final() {
       <p style = "font-size: 1rem";>(1 kolo trochu spomalíme...)</p>`;
     // hráč to evidentne nestíha, spomalíme na jedno kolo... predĺž interval obnovy kociek
     interval = 1300; // na pevnú hodnotu, nie iba pridávať
+    // ! je jasné źe hra po tejto zmene intervalu teraz netrvá 120 sekúnd reálne, ale nepotrebujem to dajako kriticky riešiť (dvoma časovačmi), tu o nič podstatné nejde, len o to aby sa spomalila...
   }
   // info o reštarte sa zobrazí neviditeľno, až neskôr sa zvidieľný - a je to potom bez trhania a pohybu, nie ako pri pridávaní p elementu...
   end_status += `<p id = "restart_click" style = "color: var(--txt_bgr_color); font-size: 1rem; margin-top: 0.5rem; padding: 2px 6px 2px 6px; border-radius: 4px;">Klikni na obrazovku pre reštart hry...</p>`;
