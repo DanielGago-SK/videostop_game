@@ -233,7 +233,7 @@ function premium_false() {
   localStorage.setItem("premium", 0);
 }
 
-//*** funkcia pre tlačidlo reset - stopni a resetni hru, ale rekordné skóre nenulujem
+//*** funkcia pre tlačidlo reset - stopni a resetni danú hru, ale rekordné skóre nenulujem
 // stopni zobrazovanie kociek aj meranie času
 function reset_the_game() {
   if (canVibrate) window.navigator.vibrate(30);
@@ -326,7 +326,12 @@ function final() {
         <p>Aj prémia <span>${premium_diamond}</span> bola. <br> 👍</p>`;
     } else {
       end_status += `
-        <p>Aj prémie <span>${premium_diamond}</span> boli. <br> 👍</p>`;
+        <p>Aj prémie <span>`
+        for (let pd = 0; pd < premium_this_game; pd++) {
+          end_status += premium_diamond
+        }
+        end_status += `
+        ${premium_diamond}</span> boli. <br> 👍</p>`;
     }
     // a ulož premiu aj globálne
     localStorage.setItem("premium", premium);
