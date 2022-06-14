@@ -323,15 +323,15 @@ function final() {
   if (premium_this_game > 0) {
     if (premium_this_game == 1) {
       end_status += `
-        <p>Aj prémia <span>${premium_diamond}</span> bola. <br> 👍</p>`;
+        <p>Aj prémia ${premium_diamond} bola. <br> 👍</p>`;
     } else {
       end_status += `
-        <p>Aj prémie <span>`
+        <p>Aj prémie`
         for (let pd = 0; pd < premium_this_game; pd++) {
           end_status += premium_diamond
         }
         end_status += `
-        ${premium_diamond}</span> boli. <br> 👍</p>`;
+        boli. <br> 👍</p>`;
     }
     // a ulož premiu aj globálne
     localStorage.setItem("premium", premium);
