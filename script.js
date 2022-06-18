@@ -8,6 +8,10 @@ get_premium_svg();
 
 /* v rámci prípravy na zmenu jazykov tu musím tie texty generovať takto... */
 /* ak teda pridám zmenu jazykov, tak podľa zvoleného jazyka sa prepíše vnútorný html obsah */
+
+rst.innerText = `Reset`;
+start.innerText = `Start`;
+/* ! zaujímavé že ten obsah elementu sa nahodí aj bez toho aby som si ten ID element v JS ku predtým načítal... objekt s id start nenačítavam nikde... JS teda aj samo vie asi podľa ID o aký objekt v html kóde ide... */
 info_block.innerHTML = `
 <p>Skóre: <span id="score">0</span></p>
 			<p class="small">Posledný klik: <span id="last_click"></span></p>
@@ -20,9 +24,7 @@ rules_info.innerHTML = `
 <p><b>Pravidlá:</b><br>
 			Cieľom hry je získavať body za klikanie v "správnom čase". Treba sledovať hodnoty kociek.
 			Za dve rovnaké hodnoty sú 2 body, za tri rovnaké hodnoty 6 bodov (a "prémia"
-			${premium_diamond}, ktorá sa ale zruší, ak hra
-			skončí
-			kvôli skóre pod nulou!). Ak nie je zhoda, tak -3 body... <br>
+			${premium_diamond}). Ak nie je zhoda, tak -3 body... Ak skončí hra v mínuse tak stratíš aj všetky doterajšie prémie zo všetkých hier...<br>
 			Klikaj preto s rozvahou... 🙂<br>
 			Hra končí keď sa dostaneš v skóre pod "0", alebo po 2 minútach. Tlačidlo Reset ruší iba aktuálnu hru,
 			hodnota "Rekord" zostáva. Ale "Prémia" zostáva iba z daktorej plne dohranej hry, nie z aktuálnej -
@@ -109,9 +111,9 @@ window.addEventListener("resize", resize_cubes);
 
 //*** RESET HRY / príprava na jej rozbeh
 //nulovanie premenných a prekreslenie obsahu na hracej ploche
-function reset() {
+function reset_the_game() {
   // zruš kontrolu tlačidla Reset, má fungovať iba ak beží hra...
-  button_rst.removeEventListener("click", reset_the_game);
+  button_rst.removeEventListener("click", reset_button_pressed);
   button_rst.style.cursor = "auto";
   score = 0; // skóre 0
   counter = timer; // počítadlo na hodnotu časovača
@@ -159,7 +161,7 @@ function start_the_game() {
   button_start.addEventListener("click", click_control);
   // aktivuj kontrolu tlačidla "Reset", má fungovať iba ak beží hra...
   button_rst.style.cursor = "pointer";
-  button_rst.addEventListener("click", reset_the_game);
+  button_rst.addEventListener("click", reset_button_pressed);
 }
 
 //*** funkcia len generuje nové hodnoty kociek a zobrazí / prekreslí ich
@@ -235,7 +237,7 @@ function premium_false() {
 
 //*** funkcia pre tlačidlo reset - stopni a resetni danú hru, ale rekordné skóre nenulujem
 // stopni zobrazovanie kociek aj meranie času
-function reset_the_game() {
+function reset_button_pressed() {
   if (canVibrate) window.navigator.vibrate(30);
   // stopni časovače
   clearInterval(interval_cubes);
@@ -247,14 +249,14 @@ function reset_the_game() {
   // spomalená rýchlosť je iba ako pomôcka po neúspešnej hre, ak dakto použije reset tak o túto pomôcku jednoducho príde...
   // nahranú prémiu z tejto hry zruš... (ak nebola predtým už dajaká nahraná tak zruš ju rovno globálne)
   premium = premium - premium_this_game; // vrátim hodnotu premium do pôvodného stavu pred začiatkom hry
-  // prekresly aktuálny stav prémie...
+  // prekresli aktuálny stav prémie...
   if (premium > 0) {
     premium_true();
   } else {
     premium_false();
   }
   // vykonaj reset
-  reset();
+  reset_the_game();
 }
 
 //*** kontrola behu hry, či nevypršal čas a jeho zobrazenie...
@@ -274,13 +276,13 @@ function stopwatch() {
   }
 }
 
-//*** zastav hru, koniec hry (nie je to to isté ako reset!, len dosť podobné)...
+//*** zastav hru, koniec hry (nie je to to isté ako keď sa stlačí tlačidlo reset!, len dosť podobné)...
 // tu totiž ide aj o ten záver - final funkciu
 function stop() {
   // blokni hneď tlačidlo Klik - keby som chcel efektnejší nábeh konca aby sa to neprebíjalo...
   button_start.removeEventListener("click", click_control);
   // zruš aj okamžite kontrolu tlačidla Reset, má fungovať iba ak beží hra...
-  button_rst.removeEventListener("click", reset_the_game);
+  button_rst.removeEventListener("click", reset_button_pressed);
   // stav hry - nebeží
   game_running = false;
   // stopni zobrazovanie kociek aj meranie času
@@ -291,11 +293,11 @@ function stop() {
   button_start.innerText = "Start";
   interval = 1000; // vráť rýchlosť ak bola spomalená
   // spusti funkciu na záverečné zhodnotenie
-  final();
+  final_output_screen();
 }
 
 //*** záverečné zhodnotenie - zobrazenie finálnej obrazovky
-function final() {
+function final_output_screen() {
   // hoď obrazovku hore - dôležité hlavne pre telefóny na ležato, tam sa hrá mierne nižšie a obrazovka výsledkov je potom mimo...
   window.scrollTo({
     top: 0,
@@ -340,7 +342,8 @@ function final() {
   // looser kontrola - body v mínuse...
   if (score < 0) {
     end_status += `
-      <p>Skončil(a) si v mínuse...<br><span style="color: red;">SI "LOSER"!</span></p>
+      <p>Skončil(a) si v mínuse...<br><span style="color: var(--bgr_color_red);">SI "LOSER"!</span></p>
+      <p>Aj prémie sú komplet fuč...</p>
       <p style = "font-size: 1rem";>(1 kolo trochu spomalíme...)</p>`;
     // hráč to evidentne nestíha, spomalíme na jedno kolo... predĺž interval obnovy kociek
     interval = 1300; // na pevnú hodnotu, nie iba pridávať
@@ -349,7 +352,7 @@ function final() {
   // kontrola nulového stavu - slabý výkon...
   if (score == 0) {
     end_status += `
-      <p>Skončil(a) si s nulovým skóre...<br><span style="color: red;">Si nula...</span></p>
+      <p>Skončil(a) si s nulovým skóre...<br><span style="color: var(--bgr_color_red);">Si nula...</span></p>
       <p style = "font-size: 1rem";>(1 kolo trochu spomalíme...)</p>`;
     // hráč to evidentne nestíha, spomalíme na jedno kolo... predĺž interval obnovy kociek
     interval = 1300; // na pevnú hodnotu, nie iba pridávať
@@ -376,7 +379,7 @@ function remove_final() {
   final_info.style.display = "none";
   final_info.removeEventListener("click", remove_final);
   if (canVibrate) window.navigator.vibrate(60);
-  reset();
+  reset_the_game();
 }
 
 //*** ak sa kliklo na pravidlá, zobraz pravidlá a potom ich na klik zasa zruš
@@ -405,7 +408,7 @@ function resize_cubes() {
   // ak hra nebeží, tak aj reset - prekreslí to kocky. Ale ak beží, tak sa prekreslia automaticky...
   // ! a nemôžem ten Reset volať vždy, teda aj uprostred hry... Resetol by som hru...
   if (!game_running) {
-    reset();
+    reset_the_game();
   }
 }
 
@@ -560,8 +563,8 @@ function define_cube_array() {
 }
 
 function get_premium_svg() {
-  // v premennej "premium_diamond" bude uložený kód pre svg diamant, kvôli jeho dĺžke
-  // width a height "1em" zabezpečuje že jeho veľkosť zobrazenia bude vždy adekvátna veľkosti okolitého textu kde s azobrazí... To sami hodí, lebo v pravidlách je iná ako v samotnej hre...
+  // v premennej "premium_diamond" bude uložený kód pre svg diamant, kvôli jeho dĺžke, nech to nepíšem celé do kódy x krát 
+  // width a height "1em" zabezpečuje že jeho veľkosť zobrazenia bude vždy adekvátna veľkosti okolitého textu kde sa zobrazí... To sa mi hodí, lebo v pravidlách je iná ako v samotnej hre...
   premium_diamond = `
 <svg
 width="1em" height="1em" 

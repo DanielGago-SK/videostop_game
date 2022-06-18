@@ -159,10 +159,11 @@ text-align: center;
 
 #final_info {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh; /* na mobile na ležato by možno už nevošiel komplet obsah na 100vh...*/
   position: absolute;
   top: 0;
   left: 0;
+  padding-bottom: 0.5rem;
   background-color: var(--txt_bgr_color);
   color: white;
   font-size: 2rem;
