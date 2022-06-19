@@ -28,12 +28,10 @@ rules_info.innerHTML = `
 			Klikaj preto s rozvahou... 🙂<br>
 			Hra končí keď sa dostaneš v skóre pod "0", alebo po 2 minútach. Tlačidlo Reset ruší iba aktuálnu hru,
 			hodnota "Rekord" zostáva. Ale "Prémia" zostáva iba z daktorej plne dohranej hry, nie z aktuálnej -
-			prerušenej!<br>
-			<br>
-			<span style="background-color: var(--bgr_color_red); padding: 2px 6px 4px 6px; border-radius: 4px;">
-				Klikni pre zrušenie nápovedy.</span><br>
-			&copy;12/2021 Daniel Gago
-		</p>
+			prerušenej!</p>
+			<p style="background-color: var(--bgr_color_red); padding: 2px 6px 4px 6px; border-radius: 4px;">
+				Klikni pre zrušenie nápovedy.</p> 
+      <p>&copy;12/2021 Daniel Gago</p>
     `;
 
 //*** naťahaj potrebné objekty a zadefinuj potrebné premenné
