@@ -186,7 +186,7 @@ text-align: center;
   width: 100vw;
   height: 0px;
   transition: height 1s;
-  overflow: hidden;
+  overflow: auto;
   position: absolute;
   top: 0;
   left: 0;
@@ -214,4 +214,9 @@ text-align: center;
   letter-spacing: 1px;
   max-width: 700px;
   line-height: 1.5;
+}
+@media only screen and (max-height: 361px) {
+#rules_info p {
+  line-height: 1.2;
+}
 }
