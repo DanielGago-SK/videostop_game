@@ -27,7 +27,7 @@ rules_info.innerHTML = `
 			${premium_diamond}). Ak nie je zhoda, tak -3 body... Ak skončí hra v mínuse tak stratíš aj všetky doterajšie prémie zo všetkých hier...<br>
 			Klikaj preto s rozvahou... 🙂<br>
 			Hra končí keď sa dostaneš v skóre pod "0", alebo po 2 minútach. Tlačidlo Reset ruší iba aktuálnu hru,
-			hodnota "Rekord" zostáva. Ale "Prémia" zostáva iba z daktorej plne dohranej hry, nie z aktuálnej -
+			hodnota "Rekord" a "Prémia" zostanú, ale iba z daktorej plne dohranej hry, nie z aktuálnej -
 			prerušenej!</p>
 			<p style="background-color: var(--bgr_color_red); padding: 2px 6px 4px 6px; border-radius: 4px;">
 				Klikni pre zrušenie nápovedy.</p> 
