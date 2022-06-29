@@ -107,6 +107,31 @@ resize_cubes();
 window.addEventListener("resize", resize_cubes);
 /* po novom môžem mať kontrolu "resize" neustále aktívnu - na to aby mi to neurobilo reset si dáva pozor - pri aktívnej hre sa vykoná táto funkcia bez resetu... */
 
+// aktivácia možnosti totálneho resetu hry - "Prémia", "Rekord", všetko sa vynuluje a reset hry...
+// táto možnosť nebude nikde spomenutá, je iba "tajná" - aktivuje sa 4 krát kliknutím na logo DG !!!
+total_reset = 0;
+document.querySelector("#logo").addEventListener("click", wait_for_reset);
+
+function wait_for_reset() {
+  total_reset++;
+  setTimeout (function() {
+    // po 3 sekundách sa vynuluje stav, takže reset je možný iba ak sa 4 krát klikne na logo do 3 sekúnd!
+    total_reset = 0;
+  },3000);
+  if (total_reset > 3) {
+    total_reset = 0;
+    // vynuluj nový rekord:
+    new_record = 0;
+    localStorage.setItem("new_record", 0);
+    record_info.innerText = new_record;
+    // vynuluj prémiu
+    premium_false();
+    // a reset hry...
+    if (game_running) {reset_button_pressed();}
+    else {reset_the_game};
+}
+};
+
 //*** RESET HRY / príprava na jej rozbeh
 //nulovanie premenných a prekreslenie obsahu na hracej ploche
 function reset_the_game() {
