@@ -351,12 +351,12 @@ function final_output_screen() {
         <p>Aj prémia ${premium_diamond} bola. <br> ${thumbs_up}</p>`;
     } else {
       end_status += `
-        <p>Aj prémie`
+        <p>Aj prémie boli. <br>`;
         for (let pd = 0; pd < premium_this_game; pd++) {
           end_status += premium_diamond
         }
         end_status += `
-        boli. <br> ${thumbs_up}</p>`;
+         <br>${thumbs_up}</p>`;
     }
     // a ulož premiu aj globálne
     localStorage.setItem("premium", premium);
