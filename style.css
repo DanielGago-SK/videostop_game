@@ -160,7 +160,7 @@ text-align: center;
 
 #final_info {
   width: 100vw;
-  min-height: 100vh; 
+  min-height: 100vh;
   /* na mobile na ležato by možno už nevošiel komplet obsah na 100vh, preto min-height... */
   position: absolute;
   top: 0;
@@ -187,25 +187,25 @@ text-align: center;
 @media only screen and (max-height: 365px) {
   /* malá výška displaya - mobil na šírku! 
   /* treba zmenšiť obsah trochu... */
-#final_info {
-  font-size: 1.6rem;
-}
+  #final_info {
+    font-size: 1.6rem;
+  }
 }
 
 @media only screen and (max-width: 421px) {
   /* malá šírka, mierne menší text */
-#final_info {
-  font-size: 1.75rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
+  #final_info {
+    font-size: 1.75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 }
 
 #rules_info {
   width: 100vw;
   height: 0px;
   transition: height 1s;
-  overflow: auto;
+  overflow: hidden;
   position: absolute;
   top: 0;
   left: 0;
@@ -236,10 +236,10 @@ text-align: center;
 }
 
 @media only screen and (max-height: 365px) {
-#rules_info p {
-  /* malá výška displaya - mobil na šírku! 
+  #rules_info p {
+    /* malá výška displaya - mobil na šírku! 
   /* treba stiahnuť obsah trochu... */
-  padding: 0.3rem 1rem;
-  line-height: 1.2;
-}
+    padding: 0.3rem 1rem;
+    line-height: 1.2;
+  }
 }

@@ -31,7 +31,15 @@
 
 </head>
 
-<body>
+<body style="opacity:0; transition: opacity 0.25s;">
+
+	<script>
+		// hra nabieha jemno na orazovku
+		// v podstate sa počká na vykreslenie obsahu a potom a pomaly objaví...
+		setTimeout(() => {
+			document.querySelector("body").style.opacity = "1";
+		}, 500);
+	</script>
 
 	<div class="width">
 		<div id="logo">

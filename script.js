@@ -2,9 +2,30 @@
 Hra 3 kocky - JS súbor
 */
 
-// načítaj do premennej svg grafiku pre prémiu
+// načítaj do premennej svg grafiku pre prémiu a "thumbs" elementy
 // je to dlhý kód, tak nech to nevypisujem potom viac krát do kódu...
-get_premium_svg();
+get_svg_articles();
+
+//*** naťahaj potrebné objekty a zadefinuj potrebné premenné
+const cube1 = document.getElementById("cube1");
+const cube2 = document.getElementById("cube2");
+const cube3 = document.getElementById("cube3");
+const button_rst = document.getElementById("rst");
+const button_start = document.getElementById("start");
+const info_block = document.getElementById("info_block");
+const premium_info = document.getElementById("premium");
+const last_click = document.getElementById("last_click");
+const counter_info = document.getElementById("counter");
+const score_info = document.getElementById("score");
+const record_info = document.getElementById("record");
+const final_info = document.getElementById("final_info");
+const rules_button = document.getElementById("rules_button");
+const rules_info = document.getElementById("rules_info");
+score = 0; // skóre
+timer = counter = 120; // dĺžka hry v sekundách, aj pre počítadlo
+interval = 1000; // interval pre zmenu hodnoty kociek
+game_running = false; // stav hry - nebeží...
+premium_this_game = 0;
 
 /* v rámci prípravy na zmenu jazykov tu musím tie texty generovať takto... */
 /* ak teda pridám zmenu jazykov, tak podľa zvoleného jazyka sa prepíše vnútorný html obsah */
@@ -34,28 +55,6 @@ rules_info.innerHTML = `
       <p>&copy;12/2021 Daniel Gago</p>
     `;
 
-//*** naťahaj potrebné objekty a zadefinuj potrebné premenné
-cube1 = document.getElementById("cube1");
-cube2 = document.getElementById("cube2");
-cube3 = document.getElementById("cube3");
-button_rst = document.getElementById("rst");
-button_start = document.getElementById("start");
-info_block = document.getElementById("info_block");
-premium_info = document.getElementById("premium");
-last_click = document.getElementById("last_click");
-counter_info = document.getElementById("counter");
-score_info = document.getElementById("score");
-record_info = document.getElementById("record");
-final_info = document.getElementById("final_info");
-rules_button = document.getElementById("rules_button");
-rules_info = document.getElementById("rules_info");
-score = 0; // skóre
-timer = 120; // dĺžka hry v sekundách
-counter = timer; // časomiera - odpočítavanie
-interval = 1000; // interval pre zmenu hodnoty kociek
-game_running = false; // stav hry - nebeží...
-premium_this_game = 0;
-
 // pokus o prevenciu voči refrešu stránky ak beží hra...
 window.onbeforeunload = function (e) {
   e.preventDefault();
@@ -70,7 +69,7 @@ new_record = localStorage.getItem("new_record");
 if (!new_record) {
   // ak je null - neexistoval, tak ho vytvor a ulož s nulou
   new_record = 0;
-  localStorage.setItem("new_record", 0);
+  localStorage.setItem("new_record", new_record);
 }
 // ak tam bola hodnota tak sa potom zobrazí...
 
@@ -107,30 +106,34 @@ resize_cubes();
 window.addEventListener("resize", resize_cubes);
 /* po novom môžem mať kontrolu "resize" neustále aktívnu - na to aby mi to neurobilo reset si dáva pozor - pri aktívnej hre sa vykoná táto funkcia bez resetu... */
 
-// aktivácia možnosti totálneho resetu hry - "Prémia", "Rekord", všetko sa vynuluje a reset hry...
-// táto možnosť nebude nikde spomenutá, je iba "tajná" - aktivuje sa 4 krát kliknutím na logo DG !!!
+// ! aktivácia možnosti totálneho resetu hry - "Prémia", "Rekord", všetko sa vynuluje a reset hry...
+// táto možnosť nebude nikde spomenutá, je iba "tajná" - aktivuje sa kliknutím na logo DG rýchlo 4 krát po sebe !!!
 total_reset = 0;
 document.querySelector("#logo").addEventListener("click", wait_for_reset);
 
 function wait_for_reset() {
   total_reset++;
-  setTimeout (function() {
+  setTimeout(function () {
     // po 3 sekundách sa vynuluje stav, takže reset je možný iba ak sa 4 krát klikne na logo do 3 sekúnd!
     total_reset = 0;
-  },3000);
+  }, 3000);
   if (total_reset > 3) {
+    // reset bude vykonaný, už sa 4. krát kliklo...
     total_reset = 0;
     // vynuluj nový rekord:
     new_record = 0;
     localStorage.setItem("new_record", 0);
     record_info.innerText = new_record;
-    // vynuluj prémiu
+    // vynuluj prémiu - stačí zavolať tú funkciu, tá všetko vykoná
     premium_false();
-    // a reset hry...
-    if (game_running) {reset_button_pressed();}
-    else {reset_the_game};
+    // a reset hry... Podľa jej stavu sa volajú funkcie...
+    if (game_running) {
+      reset_button_pressed();
+    } else {
+      reset_the_game;
+    }
+  }
 }
-};
 
 //*** RESET HRY / príprava na jej rozbeh
 //nulovanie premenných a prekreslenie obsahu na hracej ploche
@@ -261,6 +264,10 @@ function premium_false() {
 //*** funkcia pre tlačidlo reset - stopni a resetni danú hru, ale rekordné skóre nenulujem
 // stopni zobrazovanie kociek aj meranie času
 function reset_button_pressed() {
+  document.querySelector("body").style.opacity = "0";
+  setTimeout(() => {
+    document.querySelector("body").style.opacity = "1";
+  }, 250);
   if (canVibrate) window.navigator.vibrate(30);
   // stopni časovače
   clearInterval(interval_cubes);
@@ -321,7 +328,7 @@ function stop() {
 
 //*** záverečné zhodnotenie - zobrazenie finálnej obrazovky
 function final_output_screen() {
-  // hoď obrazovku hore - dôležité hlavne pre telefóny na ležato, tam sa hrá mierne nižšie a obrazovka výsledkov je potom mimo...
+  // nastav najskôr obrazovku hore - dôležité hlavne pre telefóny na ležato, tam sa hrá mierne nižšie a obrazovka výsledkov je potom mimo...
   window.scrollTo({
     top: 0,
     left: 0,
@@ -352,10 +359,10 @@ function final_output_screen() {
     } else {
       end_status += `
         <p>Aj prémie boli. <br>`;
-        for (let pd = 0; pd < premium_this_game; pd++) {
-          end_status += premium_diamond
-        }
-        end_status += `
+      for (let pd = 0; pd < premium_this_game; pd++) {
+        end_status += premium_diamond;
+      }
+      end_status += `
          <br>${thumbs_up}</p>`;
     }
     // a ulož premiu aj globálne
@@ -379,7 +386,6 @@ function final_output_screen() {
       <p style = "font-size: 1rem";>(1 kolo trochu spomalíme...)</p>`;
     // hráč to evidentne nestíha, spomalíme na jedno kolo... predĺž interval obnovy kociek
     interval = 1300; // na pevnú hodnotu, nie iba pridávať
-    // ! je jasné źe hra po tejto zmene intervalu teraz netrvá 120 sekúnd reálne, ale nepotrebujem to dajako kriticky riešiť (dvoma časovačmi), tu o nič podstatné nejde, len o to aby sa spomalila...
   }
   // info o reštarte sa zobrazí neviditeľno, až neskôr sa zvidieľný - a je to potom bez trhania a pohybu, nie ako pri pridávaní p elementu...
   end_status += `<p id = "restart_click" style = "color: var(--txt_bgr_color); font-size: 1rem; margin-top: 0.5rem; padding: 2px 6px 2px 6px; border-radius: 4px;">Klikni na obrazovku pre reštart hry...</p>`;
@@ -585,8 +591,8 @@ function define_cube_array() {
   ];
 }
 
-function get_premium_svg() {
-  // v premennej "premium_diamond" bude uložený kód pre svg diamant, kvôli jeho dĺžke, nech to nepíšem celé do kódy x krát 
+function get_svg_articles() {
+  // v premennej "premium_diamond" bude uložený kód pre svg diamant, kvôli jeho dĺžke, nech to nepíšem celé do kódy x krát
   // width a height "1em" zabezpečuje že jeho veľkosť zobrazenia bude vždy adekvátna veľkosti okolitého textu kde sa zobrazí... To sa mi hodí, lebo v pravidlách je iná ako v samotnej hre...
   premium_diamond = `
 <svg
@@ -631,7 +637,9 @@ viewBox="0 0 58 50" style="enable-background:new 0 0 58 58;" xml:space="preserve
 </g>
 </svg>`;
 
-thumbs_up = `
+  // dizajn pre "palec hore"
+  /* tieto dizajnové prvky idú aj pomocou omoji znakov, ale nie sú potom jednotné pre každé zariadenie... preto som to zjednotil pomocou svg elementov */
+  thumbs_up = `
 <svg 
 width="1.1em" height="1.1em" 
  x="0px" y="0px" fill="#ffc83d"
@@ -686,7 +694,8 @@ width="1.1em" height="1.1em"
 </svg>
 `;
 
-thumbs_down = `
+  // a dizajn pre palec dole
+  thumbs_down = `
 <svg width="1em" height="1em" x="0px" y="0px" fill="#ffc83d" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
 <g><g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"><path d="M5703.7,5010.1c-354.2-36.4-785.1-126.4-1453.3-300.6c-601.2-158.9-859.7-203-1392-233.6l-212.5-11.5l-13.4,61.3c-15.3,78.5-126.4,185.7-208.7,201c-34.5,5.7-432.7,9.6-888.5,5.7c-800.4-5.7-827.2-7.7-878.9-45.9c-28.7-21.1-70.8-63.2-91.9-91.9c-40.2-51.7-40.2-61.3-40.2-2079.4c0-2025.8,0-2027.7,40.2-2081.4c21.1-28.7,68.9-72.8,103.4-97.6l65.1-44.1l863.6,5.7l865.5,5.8l67,51.7c36.4,28.7,78.5,80.4,90,114.9c13.4,34.5,30.6,78.5,38.3,97.7c9.6,30.6,34.5,19.2,187.7-82.3c459.5-302.5,679.7-631.9,1001.4-1503.1c212.5-572.5,277.6-670.2,832.9-1235c224-225.9,430.8-450,463.4-497.9c220.2-325.5,394.4-855.9,474.9-1436.1c38.3-281.5,72.8-386.8,160.8-478.7c164.7-174.2,409.7-147.4,608.9,63.2c277.6,293,446.1,790.8,446.1,1309.7c0,423.2-42.1,545.7-354.2,1039.7c-337,534.2-450,764-450,909.5c0,93.8,120.6,220.2,285.3,302.5l126.4,61.3l509.3-5.7c944-11.5,1771.2,47.9,1964.6,141.7c147.4,70.8,367.6,314,467.2,515.1c137.9,275.7,124.5,388.7-90,817.6c-88.1,176.2-120.6,260.4-111.1,289.1c5.8,23,59.4,120.6,116.8,216.4c105.3,178.1,178.1,367.6,178.1,469.1c0,105.3-76.6,258.5-239.3,472.9c-90,120.6-166.6,237.4-172.3,258.5c-5.8,23,13.4,107.2,44,185.7c155.1,404,137.9,501.7-164.7,913.4c-84.3,113-158.9,225.9-166.6,250.8c-7.7,24.9,9.6,155.1,40.2,308.3l51.7,266.2l-42.1,86.2c-53.6,109.1-231.7,277.6-390.6,365.7c-160.8,90-350.4,149.4-735.3,229.8C6906.2,4966,6098.1,5050.3,5703.7,5010.1z"/></g></g>
 </svg>
