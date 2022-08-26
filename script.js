@@ -55,14 +55,6 @@ rules_info.innerHTML = `
       <p>&copy;12/2021 Daniel Gago</p>
     `;
 
-// pokus o prevenciu voči refrešu stránky ak beží hra...
-window.onbeforeunload = function (e) {
-  e.preventDefault();
-  return "Refreš nie je možný, hra beží...";
-};
-/* vcelku to funguje... 
-/* môj text síce nezobrazí, ale pýta sa či sa má vykonať refreš alebo odchod zo stránky, no a o to mi šlo... */
-
 // ? je v pamäti uložený dajaký rekord
 // načítaj hodnotu
 new_record = localStorage.getItem("new_record");
@@ -141,6 +133,8 @@ function reset_the_game() {
   // zruš kontrolu tlačidla Reset, má fungovať iba ak beží hra...
   button_rst.removeEventListener("click", reset_button_pressed);
   button_rst.style.cursor = "auto";
+  // tak isto blokácia odchodu zo stránky
+  window.removeEventListener("beforeunload", no_exit); 
   score = 0; // skóre 0
   counter = timer; // počítadlo na hodnotu časovača
   game_running = false; // hra nebeží
@@ -188,6 +182,8 @@ function start_the_game() {
   // aktivuj kontrolu tlačidla "Reset", má fungovať iba ak beží hra...
   button_rst.style.cursor = "pointer";
   button_rst.addEventListener("click", reset_button_pressed);
+  // nedovoľ odchod zo stránky ak hra beží...
+  window.addEventListener("beforeunload", no_exit); 
 }
 
 //*** funkcia len generuje nové hodnoty kociek a zobrazí / prekreslí ich
@@ -440,6 +436,13 @@ function resize_cubes() {
     reset_the_game();
   }
 }
+
+function no_exit(e) {
+  e.preventDefault();
+  return "Refreš nie je možný, hra beží...";
+};  
+/* vcelku to funguje... 
+/* môj text síce nezobrazí, ale pýta sa či sa má vykonať refreš alebo odchod zo stránky, no a o to mi šlo... */
 
 // pole s grafikou kociek
 // je tu aj nula - bez guličiek, keby sa to hodilo, a aj 7 - to je plná kocka
