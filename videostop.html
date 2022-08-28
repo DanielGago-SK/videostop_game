@@ -31,15 +31,7 @@
 
 </head>
 
-<body style="opacity:0; transition: opacity 0.25s;">
-
-	<script>
-		// hra nabieha jemno na orazovku
-		// v podstate sa počká na vykreslenie obsahu a potom a pomaly objaví...
-		setTimeout(() => {
-			document.querySelector("body").style.opacity = "1";
-		}, 500);
-	</script>
+<body style="opacity:0; transition: opacity 0s;">
 
 	<div class="width">
 		<div id="logo">
@@ -83,6 +75,14 @@
 	<div id="rules_info"></div>
 
 	<script src="script.js"></script>
+		<script>
+			// hra nabieha jemno na orazovku
+			// v podstate sa počká na vykreslenie obsahu a potom a pomaly objaví...
+			setTimeout(() => {
+				document.querySelector("body").style.opacity = "1";
+				document.querySelector("body"). style.transition ="1s";
+			}, 500);
+		</script>
 
 </body>
 
