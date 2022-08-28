@@ -261,10 +261,10 @@ function premium_false() {
 // stopni zobrazovanie kociek aj meranie času
 function reset_button_pressed() {
   document.querySelector("body").style.opacity = "0";
-  document.querySelector("body").style.transition = ("0s");
+  document.querySelector("body").style.transition = ("opacity 0s");
   setTimeout(() => {
     document.querySelector("body").style.opacity = "1";
-    document.querySelector("body").style.transition = ("1s");
+    document.querySelector("body").style.transition = ("opacity 1s");
   }, 250);
   if (canVibrate) window.navigator.vibrate(30);
   // stopni časovače
