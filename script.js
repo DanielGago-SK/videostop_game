@@ -132,6 +132,7 @@ function wait_for_reset() {
 function reset_the_game() {
   // zruš kontrolu tlačidla Reset, má fungovať iba ak beží hra...
   button_rst.removeEventListener("click", reset_button_pressed);
+  button_rst.style.backgroundColor = "gray";
   button_rst.style.cursor = "auto";
   // tak isto blokácia odchodu zo stránky
   window.removeEventListener("beforeunload", no_exit); 
@@ -181,6 +182,7 @@ function start_the_game() {
   button_start.addEventListener("click", click_control);
   // aktivuj kontrolu tlačidla "Reset", má fungovať iba ak beží hra...
   button_rst.style.cursor = "pointer";
+  button_rst.style.backgroundColor = "var(--bgr_color_red)";
   button_rst.addEventListener("click", reset_button_pressed);
   // nedovoľ odchod zo stránky ak hra beží...
   window.addEventListener("beforeunload", no_exit); 
@@ -311,6 +313,7 @@ function stop() {
   button_start.removeEventListener("click", click_control);
   // zruš aj okamžite kontrolu tlačidla Reset, má fungovať iba ak beží hra...
   button_rst.removeEventListener("click", reset_button_pressed);
+  button_rst.style.backgroundColor = "gray";
   // stav hry - nebeží
   game_running = false;
   // stopni zobrazovanie kociek aj meranie času
