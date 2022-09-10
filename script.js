@@ -153,6 +153,7 @@ function reset_the_game() {
   cube3.innerHTML = cube_values[7];
   // aktivácia tlačidla s pravidlami, aby bolo k dispozícii
   rules_button.style.cursor = "help";
+  rules_button.style.color = "var(--txt_color";
   rules_button.addEventListener("click", rules_show);
   // zruš kontrolu tlačidla Klik - bude Štart tlačidlo
   button_start.removeEventListener("click", click_control);
@@ -176,6 +177,7 @@ function start_the_game() {
   interval_stopwatch = setInterval(stopwatch, 1000);
   // počas hry zruš možnosť klikania na info tlačidlo, pre istotu...
   rules_button.removeEventListener("click", rules_show);
+  rules_button.style.color = "gray";
   rules_button.style.cursor = "not-allowed";
   // hra sa rozbehla, "Štart" už zablokuj, odblokuje sa "Klik"...
   button_start.removeEventListener("click", start_the_game);
