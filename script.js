@@ -84,7 +84,7 @@ color_cube_stroke = "gray";
 cube_stroke_width = 5;
 color_circle_bgr = "#2f4858";
 color_circle_stroke = "#000";
-circle_stroke_width = 1;
+circle_stroke_width = 0;
 box = 150;
 circle_r = 14;
 
@@ -648,7 +648,7 @@ viewBox="0 0 58 50" style="enable-background:new 0 0 58 58;" xml:space="preserve
 </svg>`;
 
   // dizajn pre "palec hore"
-  /* tieto dizajnové prvky idú aj pomocou omoji znakov, ale nie sú potom jednotné pre každé zariadenie... preto som to zjednotil pomocou svg elementov */
+  /* tieto dizajnové prvky idú aj pomocou emoji znakov, ale nie sú potom jednotné pre každé zariadenie... preto som to zjednotil pomocou svg elementov */
   thumbs_up = `
 <svg 
 width="1.1em" height="1.1em" 
