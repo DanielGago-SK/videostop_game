@@ -107,15 +107,12 @@ function waitForReset() {
   }, 3000);
   if (total_reset > 3) {
     // reset bude vykonaný, už sa 4. krát kliklo...
-    total_reset = 0;
-    // vynuluj nový rekord:
-    new_record = 0;
+    // vynuluj nový rekord a prémie:
     localStorage.setItem("new_record", 0);
-    record_info.innerText = new_record;
-    // vynuluj prémiu - stačí zavolať tú funkciu, tá všetko vykoná
-    premiumFalse();
-    // a reset hry... Podľa jej stavu sa volajú funkcie...
-    game_running ? resetButtonPressed() : resetTheGame();
+    localStorage.setItem("premium", 0);
+   // zruš ochranu a tvrdý reset - reload
+    window.removeEventListener("beforeunload", noExit);
+    location.reload();
   }
 }
 
@@ -238,8 +235,8 @@ function clickControl() {
 // zobrazí sa a uloží stav - len pre túto hru, teda nie aj do Storage!
 function premiumTrue() {
   premium_state = "";
-  for (let p_index = 0; p_index < premium; p_index++) {
-    premium_state += premium_diamond;
+  for (let p = 0; p < premium; p++) {
+     premium_state += premium_diamond;
   }
   premium_info.innerHTML = premium_state;
 }
@@ -274,11 +271,7 @@ function resetButtonPressed() {
   // nahranú prémiu z tejto hry zruš... (ak nebola predtým už dajaká nahraná tak zruš ju rovno globálne)
   premium = premium - premium_this_game; // vrátim hodnotu premium do pôvodného stavu pred začiatkom hry
   // prekresli aktuálny stav prémie...
-  if (premium > 0) {
-    premiumTrue();
-  } else {
-    premiumFalse();
-  }
+  premium > 0 ? premiumTrue() : premiumFalse();
   // vykonaj reset
   resetTheGame();
 }
@@ -288,16 +281,12 @@ function stopWatch() {
   // odpočet
   counter--;
   // zobraz novú hodnotu odpočtu času hry
-  if (counter < 10) {
+  if (counter < 10) counter_info.style.color = "var(--bgr_color_red)";
     // hodnota pod 10 sekúnd červená, blíži sa koniec hry...
-    counter_info.style.color = "var(--bgr_color_red)";
-  }
   counter_info.innerText = counter;
-  if (counter == 0) {
+  if (counter == 0) stopTheGame();
     // tu nastal koniec hry - vypršal čas...
     // vykonaj funkciu stopTheGame
-    stopTheGame();
-  }
 }
 
 //*** zastav hru, koniec hry (nie je to to isté ako keď sa stlačí tlačidlo reset!, len dosť podobné)...
@@ -424,21 +413,17 @@ function resizeCubes() {
   // prepočítaj možnú šírku a výšku pre jednu kocku
   svg_size = control_width / 3 - 24;
   // nech nie je viac ako 200, je to už príliž veľké...
-  if (svg_size > 200) {
-    svg_size = 200;
-  }
+  if (svg_size > 200) svg_size = 200;
   // zadefinuj nové vlastnosti kociek
   defineCubeArray();
   // ak hra nebeží, tak aj reset - prekreslí to kocky. Ale ak beží, tak sa prekreslia automaticky...
   // ! a nemôžem ten Reset volať vždy, teda aj uprostred hry... Resetol by som hru...
-  if (!game_running) {
-    resetTheGame();
-  }
+  if (!game_running) resetTheGame();
 }
 
 function noExit(e) {
   e.preventDefault();
-  return "Refreš nie je možný, hra beží...";
+  e.returnValue = "Refreš nie je možný, hra beží...";
 }
 /* vcelku to funguje... 
 /* môj text síce nezobrazí, ale pýta sa či sa má vykonať refreš alebo odchod zo stránky, no a o to mi šlo... */
