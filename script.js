@@ -110,7 +110,7 @@ function waitForReset() {
     // vynuluj nový rekord a prémie:
     localStorage.setItem("new_record", 0);
     localStorage.setItem("premium", 0);
-   // zruš ochranu a tvrdý reset - reload
+    // zruš ochranu a tvrdý reset - reload
     window.removeEventListener("beforeunload", noExit);
     location.reload();
   }
@@ -236,7 +236,7 @@ function clickControl() {
 function premiumTrue() {
   premium_state = "";
   for (let p = 0; p < premium; p++) {
-     premium_state += premium_diamond;
+    premium_state += premium_diamond;
   }
   premium_info.innerHTML = premium_state;
 }
@@ -282,11 +282,11 @@ function stopWatch() {
   counter--;
   // zobraz novú hodnotu odpočtu času hry
   if (counter < 10) counter_info.style.color = "var(--bgr_color_red)";
-    // hodnota pod 10 sekúnd červená, blíži sa koniec hry...
+  // hodnota pod 10 sekúnd červená, blíži sa koniec hry...
   counter_info.innerText = counter;
   if (counter == 0) stopTheGame();
-    // tu nastal koniec hry - vypršal čas...
-    // vykonaj funkciu stopTheGame
+  // tu nastal koniec hry - vypršal čas...
+  // vykonaj funkciu stopTheGame
 }
 
 //*** zastav hru, koniec hry (nie je to to isté ako keď sa stlačí tlačidlo reset!, len dosť podobné)...
@@ -328,7 +328,7 @@ function finalOutputScreen() {
   // kontrola nového rekordu, ak je, daj to vedieť
   if (score > new_record) {
     end_status += `
-    <p><span style = "color: green;">Máš nový rekord!</span></p>
+    <p><span style = "color: green;" class = "blink_me";>Máš nový rekord!</span></p>
     `;
     // ulož novú hodnotu do premennej a do pamäti + hneď zobraz
     new_record = score;

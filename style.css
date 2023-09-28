@@ -184,6 +184,41 @@ text-align: center;
   text-align: center;
 }
 
+#final_info .blink_me {
+  -webkit-animation: blinker 1s linear infinite;
+  animation: blinker 1s linear infinite;
+}
+
+@-webkit-keyframes blinker {
+  0% {
+    background-color: inherit;
+  }
+  49% {
+    background-color: inherit;
+  }
+  50% {
+    background-color: white;
+  }
+  100% {
+    background-color: white;
+  }
+}
+
+@keyframes blinker {
+  0% {
+    background-color: inherit;
+  }
+  49% {
+    background-color: inherit;
+  }
+  50% {
+    background-color: white;
+  }
+  100% {
+    background-color: white;
+  }
+}
+
 @media only screen and (max-height: 365px) {
   /* malá výška displaya - mobil na šírku! 
   /* treba zmenšiť obsah trochu... */
@@ -204,6 +239,8 @@ text-align: center;
 #rules_info {
   width: 100vw;
   height: 0px;
+  -webkit-transition: height 1s;
+  -o-transition: height 1s;
   transition: height 1s;
   overflow: hidden;
   position: absolute;
@@ -212,6 +249,8 @@ text-align: center;
   background-color: var(--txt_bgr_color);
   color: white;
   font-size: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   /* normálne nezobrazené, až na konci hry ho treba */
   -webkit-box-orient: vertical;
@@ -245,7 +284,7 @@ text-align: center;
 }
 
 @media only screen and (max-width: 350px) {
-   .width h1 {
+  .width h1 {
     padding-top: 1.75rem;
   }
 }
