@@ -33,10 +33,17 @@
 
 <body style="opacity:0; transition: opacity 0s;">
 
-	<div class="width">
-		<div id="logo">
-			<img src="./android-icon-36x36.png" alt="logo" title="Hru nakódoval: Daniel Gago">
-		</div>
+	<main class="width">
+		<article id="logo">
+			<!--<img src="./android-icon-36x36.png" alt="logo" title="Hru nakódoval: Daniel Gago">-->
+			<svg version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+				<rect x="3" y="3" width="93" height="94" rx="10" style="fill:transparent"></rect>
+				<text x="40" y="80" font-family="'Times New Roman', Times, serif" font-size="80" text-anchor="middle"
+					fill="var(--txt_color)">D<title>"Hru nakódoval: Daniel Gago"</title></text>
+				<text x="60" y="80" font-family="'Times New Roman', Times, serif" font-size="80" text-anchor="middle"
+					fill="var(--txt_color)">G<title>"Hru nakódoval: Daniel Gago"</title></text>
+			</svg>
+		</article>
 		<p id="rules_button">(info)</p>
 		<!-- todo prepínanie jazykov - v príprave...	
 			<div class="language_buttons">
@@ -45,7 +52,7 @@
 			<span id="EN">EN</span>
 		</div>-->
 		<h1>3 kocky</h1>
-		<div class="top_cubes">
+		<section class="top_cubes">
 			<div id="cube1">
 
 			</div>
@@ -56,34 +63,25 @@
 
 			</div>
 
-		</div>
-		<div class="buttons">
+		</section>
+		<section class="buttons">
 			<button id="rst">Reset</button>
 			<button id="start">Štart</button>
-		</div>
-		<div id="info_block">
+		</section>
+		<section id="info_block">
 			<p>Skóre: <span id="score">0</span></p>
 			<p class="small">Posledný klik: <span id="last_click"></span></p>
 			<p class="small">Rekord: <span id="record">0</span></p>
 			<p>Prémia: <span id="premium"></span></p>
 			<p>Čas do konca: <span id="counter"></span> s</p>
-		</div>
+		</section>
 
-	</div>
+	</main>
 
-	<div id="final_info"></div>
-	<div id="rules_info"></div>
+	<article id="final_info"></article>
+	<article id="rules_info"></article>
 
 	<script src="script.js"></script>
-		<script>
-			// hra nabieha jemno na orazovku
-			// v podstate sa počká na vykreslenie obsahu a potom a pomaly objaví...
-			setTimeout(() => {
-				document.querySelector("body").style.opacity = "1";
-				document.querySelector("body"). style.transition ="opacity 1s";
-			}, 500);
-		</script>
-
 </body>
 
 </html>

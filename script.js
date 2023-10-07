@@ -688,3 +688,10 @@ width="1.1em" height="1.1em"
 </svg>
 `;
 }
+
+// a na poslednom mieste sa spustí jemný nábeh na orazovku
+// v podstate sa počká na vykreslenie obsahu a potom a pomaly objaví...
+setTimeout(() => {
+  document.querySelector("body").style.opacity = "1";
+  document.querySelector("body").style.transition = "opacity 1s";
+}, 500);

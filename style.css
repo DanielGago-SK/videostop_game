@@ -32,8 +32,8 @@ body {
   padding: 1rem;
 }
 
-#logo img {
-  height: 1.3rem;
+#logo svg {
+  height: 1.5rem;
 }
 
 #rules_button {
@@ -127,6 +127,13 @@ text-align: center;
 #start {
   background-color: green;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 400px) {
+  #rst,
+#start {
+  font-size: 1.2rem;
+}
 }
 
 /*p {
