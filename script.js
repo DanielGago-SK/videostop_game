@@ -128,13 +128,13 @@ function resetTheGame() {
   score = 0; // skóre 0
   counter = timer; // počítadlo na hodnotu časovača
   game_running = false; // hra nebeží
-  last_click.innerText = "0"; // posledný klik - 0
-  score_info.innerText = score; // skore zobraz - 0
+  last_click.innerText = "-"; // posledný klik - 0
+  score_info.innerText = "-"; // skore zobraz - 0
   record_info.innerText = new_record; // nový rekord zobraz - aktuálny stav
   premium_this_game = 0; // prémia v aktuálnej hre - zrušená
   // počítadlo času hry - zrušená červená farba textu a zobraz hodnotu časovača
   counter_info.style.color = "var(--txt_color)";
-  counter_info.innerText = counter;
+  counter_info.innerText = "-";
   // 7. objekt v poli je plná kocka...
   // takto je fajn vidieť že hra stojí
   cube1.innerHTML = cube_values[7];
@@ -161,6 +161,9 @@ function startTheGame() {
   button_start.innerText = "Klik";
   // nahoď hneď už dajaké hodnoty kociek
   changeCubes();
+  // aj štartové hodnoty počítadiel
+  score_info.innerText = score;
+  counter_info.innerText = counter + " s";
   // a spusti intervaly na nahadzovanie kociek a kontrolu času hry
   interval_cubes = setInterval(changeCubes, interval);
   interval_stopwatch = setInterval(stopWatch, 1000);
@@ -283,7 +286,7 @@ function stopWatch() {
   // zobraz novú hodnotu odpočtu času hry
   if (counter < 10) counter_info.style.color = "var(--bgr_color_red)";
   // hodnota pod 10 sekúnd červená, blíži sa koniec hry...
-  counter_info.innerText = counter;
+  counter_info.innerText = counter + " s";
   if (counter == 0) stopTheGame();
   // tu nastal koniec hry - vypršal čas...
   // vykonaj funkciu stopTheGame
