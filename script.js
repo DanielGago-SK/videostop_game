@@ -401,7 +401,7 @@ function removeFinal() {
 //*** ak sa kliklo na pravidlá, zobraz pravidlá a potom ich na klik zasa zruš
 function rulesShow() {
   if (canVibrate) window.navigator.vibrate(20);
-  rules_info.style.height = "100vh";
+  rules_info.style.height = "100dvh";
   rules_info.addEventListener("click", function () {
     if (canVibrate) window.navigator.vibrate(20);
     rules_info.style.height = "0";
