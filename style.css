@@ -16,6 +16,8 @@
 
 body {
   background: var(--bgr_color);
+    min-height: 100vh;
+  min-height: 100svh;
   min-height: 100dvh;
   position: relative;
 }
@@ -167,6 +169,8 @@ text-align: center;
 
 #final_info {
   width: 100vw;
+  min-height: 100vh;
+  min-height: 100svh;
   min-height: 100dvh;
   /* na mobile na ležato by možno už nevošiel komplet obsah na 100vh, preto min-height... */
   position: absolute;
