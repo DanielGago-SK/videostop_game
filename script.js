@@ -375,7 +375,7 @@ function finalOutputScreen() {
     interval = 1300; // na pevnú hodnotu, nie iba pridávať
   }
   // info o reštarte sa zobrazí neviditeľno, až neskôr sa zvidieľný - a je to potom bez trhania a pohybu, nie ako pri pridávaní p elementu...
-  end_status += `<p id = "restart_click" style = "color: var(--txt_bgr_color); font-size: 1rem; margin-top: 0.5rem; padding: 2px 6px 2px 6px; border-radius: 4px; curosr: pointer;">Klikni na obrazovku pre reštart hry...</p>`;
+  end_status += `<p id = "restart_click" style = "color: var(--txt_bgr_color); font-size: 1rem; margin-top: 0.5rem; padding: 2px 6px 2px 6px; border-radius: 4px; cursor: pointer;">Klikni na obrazovku pre reštart hry...</p>`;
   // zobraz ten blok
   final_info.innerHTML = end_status;
   final_info.style.display = "flex";
