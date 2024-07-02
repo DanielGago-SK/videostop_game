@@ -50,7 +50,7 @@ rules_info.innerHTML = `
 			Hra končí keď sa dostaneš v skóre pod "0", alebo po 2 minútach. Tlačidlo Reset ruší iba aktuálnu hru,
 			hodnota "Rekord" a "Prémia" zostanú, ale iba z daktorej plne dohranej hry, nie z aktuálnej -
 			prerušenej!</p>
-			<p style="background-color: var(--bgr_color_red); padding: 2px 6px 4px 6px; border-radius: 4px;">
+			<p style="background-color: var(--bgr_color_red); cursor: pointer; padding: 2px 6px 4px 6px; border-radius: 4px;">
 				Klikni pre zrušenie nápovedy.</p> 
       <p>&copy;12/2021 Daniel Gago</p>
     `;
@@ -375,7 +375,7 @@ function finalOutputScreen() {
     interval = 1300; // na pevnú hodnotu, nie iba pridávať
   }
   // info o reštarte sa zobrazí neviditeľno, až neskôr sa zvidieľný - a je to potom bez trhania a pohybu, nie ako pri pridávaní p elementu...
-  end_status += `<p id = "restart_click" style = "color: var(--txt_bgr_color); font-size: 1rem; margin-top: 0.5rem; padding: 2px 6px 2px 6px; border-radius: 4px;">Klikni na obrazovku pre reštart hry...</p>`;
+  end_status += `<p id = "restart_click" style = "color: var(--txt_bgr_color); font-size: 1rem; margin-top: 0.5rem; padding: 2px 6px 2px 6px; border-radius: 4px; curosr: pointer;">Klikni na obrazovku pre reštart hry...</p>`;
   // zobraz ten blok
   final_info.innerHTML = end_status;
   final_info.style.display = "flex";
