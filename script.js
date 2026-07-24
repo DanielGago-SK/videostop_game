@@ -35,10 +35,10 @@ start.innerText = `Start`;*/
 /* ! zaujímavé že ten obsah elementu sa nahodí aj bez toho aby som si ten ID element v JS ku predtým načítal... objekt s id start nenačítavam nikde... JS teda aj samo vie asi podľa ID o aký objekt v html kóde ide... */
 /*info_block.innerHTML = `
 <p>Skóre: <span id="score">0</span></p>
-			<p class="small">Posledný klik: <span id="last_click"></span></p>
-			<p class="small">Rekord: <span id="record">0</span></p>
-			<p>Prémia: <span id="premium"></span></p>
-			<p>Čas do konca: <span id="counter"></span> s</p>
+      <p class="small">Posledný klik: <span id="last_click"></span></p>
+      <p class="small">Rekord: <span id="record">0</span></p>
+      <p>Prémia: <span id="premium"></span></p>
+      <p>Čas do konca: <span id="counter"></span> s</p>
 `;*/
 
 rules_info.innerHTML = `
@@ -440,144 +440,122 @@ function noExit(e) {
 
 function defineCubeArray() {
   cube_values = [
-    // 0
+
+    // 0 - nepoužíva sa , prázdna kocka, ale mám tak indexy presne podľa hodnoty...
     `
 		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
 			</svg>`,
+
     // 1
     `
 		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
-			<circle cx="${box / 2 + 5}" cy="${
-      box / 2 + 5
+			<circle cx="${box / 2 + 5}" cy="${box / 2 + 5
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
 			</svg>`,
+
     // 2
     `
 		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
-			<circle cx="${box / 4}" cy="${
-      box / 4
+			<circle cx="${box / 4}" cy="${box / 4
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
 
-			<circle cx="${box - box / 4 + 10}" cy="${
-      box - box / 4 + 10
+			<circle cx="${box - box / 4 + 10}" cy="${box - box / 4 + 10
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
 		</svg>`,
+
     // 3
     `
 		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
 
-			<circle cx="${box - box / 4 + 10}" cy="${
-      box / 4
+			<circle cx="${box - box / 4 + 10}" cy="${box / 4
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box / 2 + 5}" cy="${
-      box / 2 + 5
+			<circle cx="${box / 2 + 5}" cy="${box / 2 + 5
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box / 4}" cy="${
-      box - box / 4 + 10
+			<circle cx="${box / 4}" cy="${box - box / 4 + 10
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
 		</svg>`,
+
     // 4
     `
 		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
-			<circle cx="${box / 4}" cy="${
-      box / 4
+			<circle cx="${box / 4}" cy="${box / 4
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box - box / 4 + 10}" cy="${
-      box / 4
+			<circle cx="${box - box / 4 + 10}" cy="${box / 4
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box / 4}" cy="${
-      box - box / 4 + 10
+			<circle cx="${box / 4}" cy="${box - box / 4 + 10
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box - box / 4 + 10}" cy="${
-      box - box / 4 + 10
+			<circle cx="${box - box / 4 + 10}" cy="${box - box / 4 + 10
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
 		</svg>`,
+
     // 5
     `
 		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
-			<circle cx="${box / 4}" cy="${
-      box / 4
+			<circle cx="${box / 4}" cy="${box / 4
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box - box / 4 + 10}" cy="${
-      box / 4
+			<circle cx="${box - box / 4 + 10}" cy="${box / 4
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box / 2 + 5}" cy="${
-      box / 2 + 5
+			<circle cx="${box / 2 + 5}" cy="${box / 2 + 5
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box / 4}" cy="${
-      box - box / 4 + 10
+			<circle cx="${box / 4}" cy="${box - box / 4 + 10
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box - box / 4 + 10}" cy="${
-      box - box / 4 + 10
+			<circle cx="${box - box / 4 + 10}" cy="${box - box / 4 + 10
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
 		</svg>`,
+
     // 6
     `
 		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
-			<circle cx="${box / 4}" cy="${
-      box / 4
+			<circle cx="${box / 4}" cy="${box / 4
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box - box / 4 + 10}" cy="${
-      box / 4
+			<circle cx="${box - box / 4 + 10}" cy="${box / 4
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box / 4}" cy="${
-      box / 2 + 5
+			<circle cx="${box / 4}" cy="${box / 2 + 5
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box - box / 4 + 10}" cy="${
-      box / 2 + 5
+			<circle cx="${box - box / 4 + 10}" cy="${box / 2 + 5
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box / 4}" cy="${
-      box - box / 4 + 10
+			<circle cx="${box / 4}" cy="${box - box / 4 + 10
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box - box / 4 + 10}" cy="${
-      box - box / 4 + 10
+			<circle cx="${box - box / 4 + 10}" cy="${box - box / 4 + 10
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
 		</svg>`,
-    // 7 - full
+
+    // 7 - všetky guličky kocky zobrazené, východzí stav kociek keď sa nehrá
     `
 		<svg width="${svg_size}" height="${svg_size}" viewBox = "0 0 160 160">
 			<rect x="5" y="5" rx="10" ry="10" width="${box}" height="${box}"
 				style="fill:${color_cube_bgr};stroke:${color_cube_stroke};stroke-width:${cube_stroke_width};" />
-			<circle cx="${box / 4}" cy="${
-      box / 4
+			<circle cx="${box / 4}" cy="${box / 4
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box / 2 + 5}" cy="${
-      box / 4
+			<circle cx="${box / 2 + 5}" cy="${box / 4
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box - box / 4 + 10}" cy="${
-      box / 4
+			<circle cx="${box - box / 4 + 10}" cy="${box / 4
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box / 4}" cy="${
-      box / 2 + 5
+			<circle cx="${box / 4}" cy="${box / 2 + 5
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box / 2 + 5}" cy="${
-      box / 2 + 5
+			<circle cx="${box / 2 + 5}" cy="${box / 2 + 5
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box - box / 4 + 10}" cy="${
-      box / 2 + 5
+			<circle cx="${box - box / 4 + 10}" cy="${box / 2 + 5
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box / 4}" cy="${
-      box - box / 4 + 10
+			<circle cx="${box / 4}" cy="${box - box / 4 + 10
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box / 2 + 5}" cy="${
-      box - box / 4 + 10
+			<circle cx="${box / 2 + 5}" cy="${box - box / 4 + 10
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
-			<circle cx="${box - box / 4 + 10}" cy="${
-      box - box / 4 + 10
+			<circle cx="${box - box / 4 + 10}" cy="${box - box / 4 + 10
     }" r="${circle_r}" stroke="${color_circle_stroke}" stroke-width="${circle_stroke_width}" fill="${color_circle_bgr}" />
 		</svg>`,
   ];
@@ -695,8 +673,34 @@ width="1.1em" height="1.1em"
 }
 
 // a na poslednom mieste sa spustí jemný nábeh na orazovku
-// v podstate sa počká na vykreslenie obsahu a potom a pomaly objaví...
+// v podstate sa počká na vykreslenie obsahu a potom sa pomaly objaví a nabehnú aj jednotlivé kocky...
+cube1.style.opacity = "0.1";
+cube1.style.transform = "scale(0)";
+cube2.style.opacity = "0";
+cube2.style.transform = "scale(0)";
+cube3.style.opacity = "0";
+cube3.style.transform = "scale(0)";
 setTimeout(() => {
   document.querySelector("body").style.opacity = "1";
-  document.querySelector("body").style.transition = "opacity 1s";
+  document.querySelector("body").style.transition = "opacity .5s";
+}, 100);
+setTimeout(() => {
+  cube1.classList.add("start_animation");
+}, 300);
+setTimeout(() => {
+  cube2.classList.add("start_animation");
+}, 400);
+setTimeout(() => {
+  cube3.classList.add("start_animation");
 }, 500);
+setTimeout(() => {
+  cube1.style.opacity = "1";
+  cube1.style.transform = "scale(1)";
+  cube2.style.opacity = "1";
+  cube2.style.transform = "scale(1)";
+  cube3.style.opacity = "1";
+  cube3.style.transform = "scale(1)";
+  cube1.classList.remove("start_animation");
+  cube2.classList.remove("start_animation");
+  cube3.classList.remove("start_animation");
+}, 1000);

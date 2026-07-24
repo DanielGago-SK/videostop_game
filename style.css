@@ -16,7 +16,7 @@
 
 body {
   background: var(--bgr_color);
-    min-height: 100vh;
+  min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
   position: relative;
@@ -100,6 +100,51 @@ text-align: center;
   max-height: 50vh;
 }
 
+#cube1.start_animation,
+#cube2.start_animation,
+#cube3.start_animation {
+  -webkit-animation: cube_start 0.35s ease forwards;
+  animation: cube_start 0.35s ease forwards;
+}
+
+@-webkit-keyframes cube_start {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  70% {
+    opacity: 1;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes cube_start {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  70% {
+    opacity: 1;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
 .buttons {
   position: relative;
   margin: 1rem auto 2rem auto;
@@ -118,8 +163,12 @@ text-align: center;
   border: 1px solid var(--txt_color2);
   border-radius: 5px;
   /* ďalší dvojitý okraj, spolu s border teda trojitý okraj... */
-  -webkit-box-shadow: 0 0 0 2pt gray, 0 0 0 3pt black;
-  box-shadow: 0 0 0 2pt gray, 0 0 0 3pt black;
+  -webkit-box-shadow:
+    0 0 0 2pt gray,
+    0 0 0 3pt black;
+  box-shadow:
+    0 0 0 2pt gray,
+    0 0 0 3pt black;
 }
 
 #rst {
@@ -133,9 +182,9 @@ text-align: center;
 
 @media only screen and (max-width: 400px) {
   #rst,
-#start {
-  font-size: 1.2rem;
-}
+  #start {
+    font-size: 1.2rem;
+  }
 }
 
 /*p {
